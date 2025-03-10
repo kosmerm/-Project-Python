@@ -110,6 +110,6 @@ def execute_recipe():
     pass
 # Κυρίως πρόγραμμα
 def main():
-    create_recipe()
+    pass
 if __name__ == "__main__":
     main()
