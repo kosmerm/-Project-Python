@@ -1,0 +1,100 @@
+{
+  "products": [
+    {
+      "name": "σπαγγέτι",
+      "price_per_kg": null
+    },
+    {
+      "name": "μοσχαρίσιος κιμάς",
+      "price_per_kg": null
+    },
+    {
+      "name": "βούτυρο",
+      "price_per_kg": null
+    },
+    {
+      "name": "κρεμμύδι",
+      "price_per_kg": null
+    },
+    {
+      "name": "κρυσταλλική ζάχαρη",
+      "price_per_kg": null
+    },
+    {
+      "name": "πελτές ντομάτας",
+      "price_per_kg": null
+    },
+    {
+      "name": "ντομάτα κονκασέ",
+      "price_per_kg": null
+    },
+    {
+      "name": "ελαιόλαδο",
+      "price_per_kg": null
+    },
+    {
+      "name": "αλάτι",
+      "price_per_kg": null
+    },
+    {
+      "name": "πιπέρι",
+      "price_per_kg": null
+    },
+    {
+      "name": "ντομάτα",
+      "price_per_kg": null
+    },
+    {
+      "name": "ξίδι βαλσάμικο",
+      "price_per_kg": null
+    },
+    {
+      "name": "μπέικον",
+      "price_per_kg": null
+    },
+    {
+      "name": "μανιτάρια, κομμένα",
+      "price_per_kg": null
+    },
+    {
+      "name": "κρέμα γάλακτος light",
+      "price_per_kg": null
+    },
+    {
+      "name": "πράσινη πιπεριά",
+      "price_per_kg": null
+    },
+    {
+      "name": "ρύζι γλασέ",
+      "price_per_kg": null
+    },
+    {
+      "name": "πατάτα baby",
+      "price_per_kg": null
+    },
+    {
+      "name": "κολοκυθάκι",
+      "price_per_kg": null
+    },
+    {
+      "name": "καρότο",
+      "price_per_kg": null
+    },
+    {
+      "name": "φακές",
+      "price_per_kg": null
+    },
+    {
+      "name": "κύμινο",
+      "price_per_kg": null
+    },
+    {
+      "name": "μπούκοβο",
+      "price_per_kg": null
+    },
+    {
+      "name": "κύβος λαχανικών",
+      "price_per_kg": null
+    }
+  ]
+}
