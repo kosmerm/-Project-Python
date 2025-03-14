@@ -108,6 +108,9 @@ def delete_recipe():
 # 5. Εκτέλεση συνταγής
 def execute_recipe():
     pass
+# 6. Υπολογισμός κόστους συνταγής
+def calculate_cost():
+    pass
 # Κυρίως πρόγραμμα
 def main():
     pass
