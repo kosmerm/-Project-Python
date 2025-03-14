@@ -2,99 +2,99 @@
   "products": [
     {
       "name": "σπαγγέτι",
-      "price_per_kg": null
+      "price_per_kg": 1.14
     },
     {
       "name": "μοσχαρίσιος κιμάς",
-      "price_per_kg": null
+      "price_per_kg": 10.30
     },
     {
       "name": "βούτυρο",
-      "price_per_kg": null
+      "price_per_kg": 12.40
     },
     {
       "name": "κρεμμύδι",
-      "price_per_kg": null
+      "price_per_kg": 0.78
     },
     {
       "name": "κρυσταλλική ζάχαρη",
-      "price_per_kg": null
+      "price_per_kg": 0.70
     },
     {
       "name": "πελτές ντομάτας",
-      "price_per_kg": null
+      "price_per_kg": 2.68
     },
     {
       "name": "ντομάτα κονκασέ",
-      "price_per_kg": null
+      "price_per_kg": 1.62
     },
     {
       "name": "ελαιόλαδο",
-      "price_per_kg": null
+      "price_per_kg": 6.58
     },
     {
       "name": "αλάτι",
-      "price_per_kg": null
+      "price_per_kg": 0.72
     },
     {
       "name": "πιπέρι",
-      "price_per_kg": null
+      "price_per_kg": 12.00
     },
     {
       "name": "ντομάτα",
-      "price_per_kg": null
+      "price_per_kg": 1.75
     },
     {
       "name": "ξίδι βαλσάμικο",
-      "price_per_kg": null
+      "price_per_kg": 4.16
     },
     {
       "name": "μπέικον",
-      "price_per_kg": null
+      "price_per_kg": 7.75
     },
     {
       "name": "μανιτάρια, κομμένα",
-      "price_per_kg": null
+      "price_per_kg": 4.78
     },
     {
       "name": "κρέμα γάλακτος light",
-      "price_per_kg": null
+      "price_per_kg": 3.60
     },
     {
       "name": "πράσινη πιπεριά",
-      "price_per_kg": null
+      "price_per_kg": 3.55
     },
     {
       "name": "ρύζι γλασέ",
-      "price_per_kg": null
+      "price_per_kg": 1.96
     },
     {
       "name": "πατάτα baby",
-      "price_per_kg": null
+      "price_per_kg": 4.62
     },
     {
       "name": "κολοκυθάκι",
-      "price_per_kg": null
+      "price_per_kg": 1.75
     },
     {
       "name": "καρότο",
-      "price_per_kg": null
+      "price_per_kg": 0.80
     },
     {
       "name": "φακές",
-      "price_per_kg": null
+      "price_per_kg": 1.88
     },
     {
       "name": "κύμινο",
-      "price_per_kg": null
+      "price_per_kg": 18.80
     },
     {
       "name": "μπούκοβο",
-      "price_per_kg": null
+      "price_per_kg": 15.20
     },
     {
       "name": "κύβος λαχανικών",
-      "price_per_kg": null
+      "price_per_kg": 7.33
     }
   ]
 }
