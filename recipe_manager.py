@@ -1,29 +1,35 @@
 import json
-# 1. Καταχώρηση συνταγής
-def create_recipe():
-    # Το όνομα της συνταγής
+# Το όνομα της συνταγής
+def create_name():
     name = input("Καταχωρίστε το όνομα της συνταγής (π.χ. μακαρόνια με κιμά): ")
-    # Η κατηγορία της συνταγής
+    return name
+# Η κατηγορία της συνταγής
+def create_category():
     category = input("Καταχωρίστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
     while category != "δημητριακά" and category != "φρούτα" and category != "λαχανικά" and category != "γαλακτοκομικά" and category != "κρέας & προϊόντα" and category != "όσπρια" and category != "λίπη & έλαια" and category != "τρόφιμα με πολύ λίπος ή ζάχαρη":
         category = input("Καταχωρίστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
-    # Ο βαθμός δυσκολίας της συνταγής
+    return category
+# Ο βαθμός δυσκολίας της συνταγής
+def create_difficulty():
     difficulty = input("Καταχωρίστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
     while difficulty != "εύκολη" and difficulty != "μεσαία" and difficulty != "δύσκολη":
         difficulty = input("Καταχωρίστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
-    # Ο συνολικός χρόνος εκτέλεσης της συνταγής
+    return difficulty
+# Ο συνολικός χρόνος εκτέλεσης της συνταγής
+def create_total_time():
     while True:
         total_time = input("Καταχωρίστε τον συνολικό χρόνο εκτέλεσης σε λεπτά (π.χ. 65): ")
         if total_time == "":
             total_time = None
-            break
+            return total_time
         else:
             try:
                 total_time = float(total_time)
-                break
+                return total_time
             except:
                 print("Κάτι πήγε στραβά.")
-    # Τα υλικά της συνταγής
+# Τα υλικά της συνταγής
+def create_ingredients():
     ingredients = []
     while True:
         number_of_ingredients = input("Καταχωρίστε το πλήθος των υλικών: ")
@@ -54,7 +60,9 @@ def create_recipe():
             "quantity": quantity
         }
         ingredients.append(ingredient)
-    # Τα βήματα εκτέλεσης της συνταγής
+    return ingredients
+# Τα βήματα εκτέλεσης της συνταγής
+def create_steps():
     steps = []
     while True:
         number_of_steps = int(input("Καταχωρίστε το πλήθος των βημάτων: "))
@@ -70,18 +78,36 @@ def create_recipe():
     for i in range(0, number_of_steps):
         description = input(f"Καταχωρίστε την περιγραφή του {i + 1}ου βήματος: ")
         steps.append(description)
-    # Οι μερίδες της συνταγής
+    return steps
+# Οι μερίδες της συνταγής
+def create_portions():
     while True:
         portions = input("Καταχωρίστε τις μερίδες της συνταγής (π.χ. 6): ")
         if portions == "":
             portions = 0
-            break
+            return portions
         else:
             try:
                 portions = int(portions)
-                break
+                return portions
             except:
                 print("Κάτι πήγε στραβά.")
+# 1. Καταχώρηση συνταγής
+def create_recipe():
+    # Το όνομα της συνταγής
+    name = create_name()
+    # Η κατηγορία της συνταγής
+    category = create_category()
+    # Ο βαθμός δυσκολίας της συνταγής
+    difficulty = create_difficulty()
+    # Ο συνολικός χρόνος εκτέλεσης της συνταγής
+    total_time = create_total_time()
+    # Τα υλικά της συνταγής
+    ingredients = create_ingredients()
+    # Τα βήματα εκτέλεσης της συνταγής
+    steps = create_steps()
+    # Οι μερίδες της συνταγής
+    portions = create_portions()
     recipe = {
         "name": name,
         "category": category,
