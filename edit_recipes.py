@@ -32,7 +32,9 @@ def edit_recipe():
         
         try:
             recipe_number = int(input("Δώστε τον αριθμό της συνταγής που θέλετε να τροποποιήσετε: "))
-            if recipe_number < 1 or recipe_number > len(recipes["recipes"]):
+            if recipe_number == 0:
+                return
+            elif recipe_number < 1 or recipe_number > len(recipes["recipes"]):
                 print("Λάθος αριθμός, εισάγεται έναν αριθμό από τις διαθέσιμες συνταγές")
             else:
                 break
