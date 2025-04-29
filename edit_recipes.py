@@ -349,67 +349,29 @@ def delete_recipe():
     while True:
         print("Διαθέσιμες συνταγές:")
         i=0
-        for recipe in recipes["recipes"]:
-            i+=1 #Για να γίνεται η επιλογή συνταγή με αριθμό για να αποφύγουμε λάθη αναζήτησης
-            print(f"{i}.Συνταγή: {recipe['name']}")
+        for i, recipe in enumerate(recipes["recipes"], start=1):
+            print(f"{i}. Συνταγή: {recipe['name']}")
         
         try:
-            recipe_number = int(input(f"Δώστε τον αριθμό της συνταγής που θέλετε να διαγράψετε(1 - {len(recipes["recipes"])} ή 0 για έξοδο: "))
+            recipe_number = int(input(f"Δώστε τον αριθμό της συνταγής που θέλετε να διαγράψετε(1 - {len(recipes["recipes"])}) ή 0 για έξοδο: "))
             if recipe_number == 0:
                 print("Ακύρωση διαγραφής.")
                 return
             elif recipe_number < 1 or recipe_number > len(recipes["recipes"]):
                 print("Λάθος αριθμός, εισάγετε έναν αριθμό από τις διαθέσιμες συνταγές")
             else:
-                deleted_recipe = recipes["recipes"].pop(recipe_number - 1)
+                selected_recipe = recipes["recipes"][recipe_number - 1]
+                confirmation=input(f"Είστε σίγουρoι ότι θέλετε να διαγράψετε τη συνταγή {selected_recipe["name"]};(y/n): ")
+                if confirmation=='n':
+                    print("Η διαγραφή ακυρώθηκε.")
+                    return
+                
+                deleted_recipe=recipe["recipes"].pop(recipe_number-1)
                 print(f"Η συνταγή '{deleted_recipe['name']}' διαγράφηκε επιτυχώς!")
+
                 #Καλεί την save_recipes η οποία αποθηκεύει στο Json ότι έγινε.
                 save_recipes(recipes,file_name)
+                break
         except ValueError:
             print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
 
-
-
-#Κεντρικό μενού ===============================================================================
-def main():
-   
-    while True:
-        print("============Συνταγές=============")
-        print("1. Καταχώρηση καινούριας συνταγής")
-        print("2. Αναζήτηση συνταγής")
-        print("3. Τροποποίηση συνταγής")
-        print("4. Διαγραφή συνταγής")
-        print("5. Εκτέλεση συνταγή")
-        print("6. Έλεγχος κόστους συνταγής")
-        print("0. Έξοδος από την εφαρμογή")
-        
-        try:  
-            #Μετατροπή του input σε int για να πιάσει ο exception handler τον λάθος χαρακτήρα
-            option=int(input("Επιλέξτε 1 έως 6 για να συνεχίσετε ή 0 για έξοδο:"))
-            if option == 1:
-                print("add_recipe")
-                #add_recipe()
-            elif option == 2:
-                print("search_recipe")
-                #search_recipe()
-            elif option == 3:
-                print("edit_recipe")
-                edit_recipe()
-            elif option == 4:
-                print("delete_recipe")
-                delete_recipe()
-            elif option == 5:
-                print("execute_recipe")
-                #execute_recipe()
-            elif option == 6:
-                print("cost_recipe")
-                #cost_recipe()
-            elif option == 0:
-                print("Goodbye!")
-                break
-            else:
-                print("Λάθος επιλογή") 
-        except ValueError:
-            print("Η επιλογή γίνεται μόνο με αριθμούς από το 0 έως το 6")
-
-main()
