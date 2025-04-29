@@ -366,7 +366,7 @@ def delete_recipe():
                     print("Η διαγραφή ακυρώθηκε.")
                     return
                 
-                deleted_recipe=recipe["recipes"].pop(recipe_number-1)
+                deleted_recipe=recipes["recipes"].pop(recipe_number-1)
                 print(f"Η συνταγή '{deleted_recipe['name']}' διαγράφηκε επιτυχώς!")
 
                 #Καλεί την save_recipes η οποία αποθηκεύει στο Json ότι έγινε.
