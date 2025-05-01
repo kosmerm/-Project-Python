@@ -41,7 +41,7 @@ def add_recipe():
     recipes = load_recipes()
     recipes.append(new_recipe)
     save_recipes(recipes)
-    print("✅ Η συνταγή προστέθηκε!")
+    print(" Η συνταγή προστέθηκε!")
 
 # Αναζήτηση συνταγής
 def search_recipe():
@@ -58,12 +58,12 @@ def search_recipe():
             for i, step in enumerate(recipe["steps"], 1):
                 print(f"{i}. {step}")
     else:
-        print("❌ Δεν βρέθηκε συνταγή.")
+        print(" Δεν βρέθηκε συνταγή.")
 
 # Μενού
 def main():
     while True:
-        print("\n🍽️  Διαχείριση Συνταγών")
+        print("\n   Διαχείριση Συνταγών")
         print("1. Δες όλες τις συνταγές")
         print("2. Πρόσθεσε νέα συνταγή")
         print("3. Αναζήτηση συνταγής")
@@ -79,7 +79,7 @@ def main():
         elif choice == "4":
             break
         else:
-            print("❗ Άκυρη επιλογή.")
+            print("  Άκυρη επιλογή.")
 
 if __name__ == "__main__":
     main()
