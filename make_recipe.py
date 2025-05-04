@@ -49,5 +49,5 @@ def main():
         display_steps(recipe['steps'])
         input("\nΠάτησε Enter για να επιστρέψεις στο μενού...")
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
