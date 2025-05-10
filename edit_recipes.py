@@ -1,12 +1,12 @@
 import json
-import unicodedata  #χρειάζομαι μία συνάρτηση που θα με διευκολύνει όταν θέλω να αναζητώ με ελληνικούς χαρακτήρες
+from add_recipes import *
 
 #to r εδω χρησιμεύει στο να μην εκλαμβάνονται τα \ σαν escape characters
-file_name = r"C:\Users\Konstantinos.Mermigk\Desktop\eap\propli\recipes.json"
-
+#file_name = r"C:\Users\Kostis\Desktop\team project\recipes.json"
+file_name="recipes.json"
 
 #Γενική Συνάρτηση για τροποποίηση συνταγών =============================================================
-def edit_recipe():
+def edit_recipes():
     # Φόρτωση συνταγών
     try:
         with open(file_name, "r", encoding="utf-8") as file:
@@ -14,7 +14,7 @@ def edit_recipe():
             #π.χ json {"name":"μακαρόνια",} => sudages={"name":"μακαρόνια",}
             recipes = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
-        print("Δεν βρήκα το JSON ή το αρχείο είναι κατεστραμμένο.")
+        print("Δεν βρέθηκε το JSON ή το αρχείο είναι κατεστραμμένο.")
         return
 
     #Έλεγχος εάν το JSON είναι κενό ελέγχοντας την μεταβλητή sudages
@@ -26,16 +26,19 @@ def edit_recipe():
     while True:
         print("Διαθέσιμες συνταγές:")
         i=0
-        for recipe in recipes["recipes"]:
-            i+=1 #Για να γίνεται η επιλογή συνταγή με αριθμό για να αποφύγουμε λάθη αναζήτησης
-            print(f"{i}.Συνταγή: {recipe['name']}")
+        #for recipe in recipes["recipes"]:
+            #i+=1 #Για να γίνεται η επιλογή συνταγή με αριθμό για να αποφύγουμε λάθη αναζήτησης
+            #print(f"{i}.Συνταγή: {recipe['name']}")
+
+        for i, recipe in enumerate(recipes["recipes"], start=1):
+            print(f"{i}. Συνταγή: {recipe['name']}")
         
         try:
-            recipe_number = int(input("Δώστε τον αριθμό της συνταγής που θέλετε να τροποποιήσετε: "))
+            recipe_number = int(input("Δώστε τον αριθμό της συνταγής που θέλετε να τροποποιήσετε ή πατήστε 0 για έξοδο: "))
             if recipe_number == 0:
                 return
             elif recipe_number < 1 or recipe_number > len(recipes["recipes"]):
-                print("Λάθος αριθμός, εισάγεται έναν αριθμό από τις διαθέσιμες συνταγές")
+                print("Λάθος αριθμός, εισάγετε έναν αριθμό από τις διαθέσιμες συνταγές")
             else:
                 break
         except ValueError:
@@ -103,11 +106,10 @@ def edit_name(recipe):
                 print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
     else:
         print("Δεν βρέθηκε το όνομα της συνταγής.Παρακαλώ εκχωρήστε το από την αρχή")    
-        #ΕΔΩ                           ΜΠΑΙΝΕΙ Η ΣΥΝΑΡΤΗΣΗ ΕΚΧΩΡΗΣΗΣ  
+        create_name()
             
             
-            
-
+                       
 #Συνάρτηση τροποποίησης κατηγορίας συνταγής ================================================================================================================================================================================================================================
 def edit_category(recipe):
     #Έλεγχος μήπως έχει μείνει κενή η μεταβλητή
@@ -116,9 +118,9 @@ def edit_category(recipe):
         while True:
             option=input("Εάν θέλετε να αλλάξετε την κατηγορία της συνταγής πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
-                category = input("Καταχωρίστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
+                category = input("Καταχωρήστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
                 while category != "δημητριακά" and category != "φρούτα" and category != "λαχανικά" and category != "γαλακτοκομικά" and category != "κρέας & προϊόντα" and category != "όσπρια" and category != "λίπη & έλαια" and category != "τρόφιμα με πολύ λίπος ή ζάχαρη":
-                    category = input("Καταχωρίστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
+                    category = input("Καταχωρήστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
                 if category:
                     recipe["category"] = category   #Από ΕΔΩ ΑΛΛΑΖΕΙ ΣΤΟ ΑΡΧΕΙΟ
                     print("Η κατηγορία ενημερώθηκε!")
@@ -130,10 +132,9 @@ def edit_category(recipe):
                 print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
     else:
         print("Δεν βρέθηκε η κατηγορία της συνταγής.Παρακαλώ εκχωρήστε την από την αρχή")    
-        #ΕΔΩ                           ΜΠΑΙΝΕΙ Η ΣΥΝΑΡΤΗΣΗ ΕΚΧΩΡΗΣΗΣ  
+        create_category() 
         
     
-
 #Συνάρτηση τροποποίησης δυσκολίας συνταγής =============================================================
 def edit_difficulty(recipe):
     #Έλεγχος μήπως έχει μείνει κενή η μεταβλητή
@@ -142,9 +143,9 @@ def edit_difficulty(recipe):
         while True:
             option=input("Εάν θέλετε να αλλάξετε τον βαθμό της δυσκολίας πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
-                difficulty = input("Καταχωρίστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
+                difficulty = input("Καταχωρήστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
                 while difficulty != "εύκολη" and difficulty != "μεσαία" and difficulty != "δύσκολη":
-                    difficulty = input("Καταχωρίστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
+                    difficulty = input("Καταχωρήστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
                 if difficulty:
                     recipe["difficulty"]=difficulty
                     print("Η δυσκολία ενημερώθηκε!")
@@ -156,7 +157,8 @@ def edit_difficulty(recipe):
                 print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
     else:
         print("Δεν βρέθηκε η δυσκολία της συνταγής.Παρακαλώ εκχωρήστε την από την αρχή")  
-        #ΕΔΩ                           ΜΠΑΙΝΕΙ Η ΣΥΝΑΡΤΗΣΗ ΕΚΧΩΡΗΣΗΣ  
+        create_difficulty()  
+
 
 #Συνάρτηση τροποποίησης χρόνου συνταγής ====================================================
 def edit_total_time(recipe):
@@ -167,7 +169,7 @@ def edit_total_time(recipe):
             option=input("Εάν θέλετε να αλλάξετε την συνολική διάρκεια υλοποίησης πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
                 try:
-                    total_time = float(input("Καταχωρίστε τον συνολικό χρόνο εκτέλεσης σε λεπτά (π.χ. 65): "))
+                    total_time = float(input("Καταχωρήστε τον συνολικό χρόνο εκτέλεσης σε λεπτά (π.χ. 65): "))
                     if total_time:
                         recipe["total_time"]=total_time
                         print("Η συνολική διάρκεια ενημερώθηκε!")
@@ -182,8 +184,7 @@ def edit_total_time(recipe):
                 print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
     else:
         print("Δεν βρέθηκε η διάρκεια υλοποίησης της συνταγής.Παρακαλώ εκχωρήστε την από την αρχή")  
-        #ΕΔΩ                           ΜΠΑΙΝΕΙ Η ΣΥΝΑΡΤΗΣΗ ΕΚΧΩΡΗΣΗΣ  
-
+        create_total_time()  
 
 
 #Συνάρτηση τροποποίησης υλικών ==================================================================================
@@ -195,6 +196,8 @@ def edit_ingredients(recipe):
 
     if not recipe["ingredients"]:
         print("Δεν υπάρχουν υλικά για αυτήν την συνταγή.")
+        print("Παρακαλώ εκχωρήστε τα από την αρχή")
+        create_ingredients()
     
     while True:
         print("Υλικά συνταγής:")
@@ -250,48 +253,58 @@ def edit_ingredients(recipe):
         else:
             print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
 
+
 #Συνάρτηση τροποποίησης βημάτων ==========================================================
 def edit_steps(recipe):
     #Εμφάνιση των ήδη υπάρχοντων βημάτων με join σε list comprehension (list me strings)
-    if(recipe["steps"]):
-        print("Τρέχοντα Βήματα: ")
-        for i , step in enumerate(recipe["steps"], start=1): #Η enumerate διατρέχει μία λίστα παίρνοντας ταυτόχρονα και το index κάθε στοιχείου
-            print(f"{i}. {step}")
+    if not recipe["ingredients"]:
+        print("Δεν υπάρχουν βήματα για αυτήν την συνταγή.")
+        print("Παρακαλώ εκχωρήστε τα από την αρχή")
+        create_steps()
 
-        while True:
-                option=input("Εάν θέλετε να τροποποιήσετε κάποιο από τα βήματα πατήστε 'y' αλλιώς 'n' για έξοδο:")
-                if option=="y":
-                    try:
-                        #while True:
-                            #try:
-                        step_number=int(input("Εισάγετε τον αριθμό του βήματος που θέλετε να τροποποιήσετε ή 0 για έξοδο: "))
-                        if step_number==0:
-                            print("Έξοδος από την τροποποίηση των βημάτων")
-                            return
-                        if step_number < 1 or step_number > len(recipe["steps"]):
-                            print(f"Παρακαλώ εισάγετε αριθμό από 1 έως {len(recipe['steps'])}.")
-                        else: #Εισαγωγή νέου βήματος
-                            new_step = input("Εισάγετε το νέο βήμα: ").strip()
-                            if new_step:
-                                recipe["steps"][step_number - 1] = new_step
-                                print(f"Το βήμα {step_number} ενημερώθηκε με επιτυχία!")
-                            else:
-                                print("Δεν έγινε καμία αλλαγή γιατί δεν δόθηκε νέο βήμα.")
-                    except ValueError:
-                        print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό.")
+    while True:
+        print("\nΕπιλογές:")
+        print("1. Τροποποίηση υπάρχοντος βήματος")
+        print("2. Προσθήκη νέου βήματος")
+        print("0. Έξοδος")
+        option = input("Εισάγετε την επιλογή σας: ")
+
+        if option == "1":
+            print("Τρέχοντα Βήματα:")
+            for i, step in enumerate(recipe["steps"], start=1):
+                print(f"{i}. {step}")
+            try:
+                step_number=int(input("Εισάγετε τον αριθμό του βήματος που θέλετε να τροποποιήσετε ή 0 για έξοδο: "))
+                if step_number==0:
+                    print("Τα βήματα της συνταγής δεν βρέθηκαν , παρακαλώ επιλέξτε το 2 από το menu για να εισάγεται νέα βήματα")
+                    return
+                if step_number < 1 or step_number > len(recipe["steps"]):
+                    print(f"Παρακαλώ εισάγετε αριθμό από 1 έως {len(recipe['steps'])}.")
+                else: #Εισαγωγή νέου βήματος
+                    new_step = input("Εισάγετε το νέο βήμα: ").strip()
+                    if new_step:
+                        recipe["steps"][step_number - 1] = new_step
+                        print(f"Το βήμα {step_number} ενημερώθηκε με επιτυχία!")
+                    else:
+                        print("Δεν έγινε καμία αλλαγή γιατί δεν δόθηκε νέο βήμα.")
+            except ValueError:
+                print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό.")
                     
 
-                elif option=="n":
-                    return
-                else:
-                    print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
-    else:
-        print("Δεν βρέθηκαν τα βήματα υλοποίησης της συνταγής.Παρακαλώ εκχωρήστε τα από την αρχή")  
-        #ΕΔΩ                           ΜΠΑΙΝΕΙ Η ΣΥΝΑΡΤΗΣΗ ΕΚΧΩΡΗΣΗΣ  
+        elif option == "2":
+            new_step = input("Εισάγετε το νέο βήμα προς προσθήκη: ").strip()
+            if new_step:
+                recipe["steps"].append(new_step)
+                print("Το νέο βήμα προστέθηκε επιτυχώς!")
+            else:
+                print("Δεν έγινε προσθήκη γιατί δεν δόθηκε κάποιο βήμα.")
 
-
-
-                
+        elif option == "0":
+            print("Έξοδος από την τροποποίηση των βημάτων.")
+            return
+        
+        else:
+            print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
    
 
 #Συνάρτηση τροποποίησης μερίδων ==========================================================
@@ -302,7 +315,7 @@ def edit_portions(recipe):
             option=input("Εάν θέλετε να αλλάξετε τις μερίδες πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
                 try:
-                    portions = int(input("Καταχωρίστε τις μερίδες (π.χ. 10): "))
+                    portions = int(input("Καταχωρήστε τις μερίδες (π.χ. 10): "))
                     if portions:
                         recipe["portions"]=portions
                         print("Η συνολική διάρκεια ενημερώθηκε!")
@@ -317,7 +330,8 @@ def edit_portions(recipe):
                 print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
     else:
         print("Δεν βρέθηκε η διάρκεια υλοποίησης της συνταγής.Παρακαλώ εκχωρήστε την από την αρχή")  
-    
+        create_portions()
+
 
 #Συνάρτηση για την αποθήκευση στο αρχείο Json ============================================
 def save_recipes(recipes, file_name):
@@ -328,6 +342,7 @@ def save_recipes(recipes, file_name):
     except Exception as e:
         print(f"Σφάλμα κατά την αποθήκευση: {e}")
     
+
 
 #Συνάρτηση ΔΙΑΓΡΑΦΗΣ συνταγών  ===========================================================
 def delete_recipe():
@@ -348,7 +363,7 @@ def delete_recipe():
     # Εμφάνιση συνταγών
     while True:
         print("Διαθέσιμες συνταγές:")
-        i=0
+        
         for i, recipe in enumerate(recipes["recipes"], start=1):
             print(f"{i}. Συνταγή: {recipe['name']}")
         
@@ -375,3 +390,48 @@ def delete_recipe():
         except ValueError:
             print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
 
+
+
+#Κεντρικό μενού ===============================================================================
+# def main():
+   
+#     while True:
+#         print("============Συνταγές=============")
+#         print("1. Καταχώρηση καινούριας συνταγής")
+#         print("2. Αναζήτηση συνταγής")
+#         print("3. Τροποποίηση συνταγής")
+#         print("4. Διαγραφή συνταγής")
+#         print("5. Εκτέλεση συνταγή")
+#         print("6. Έλεγχος κόστους συνταγής")
+#         print("0. Έξοδος από την εφαρμογή")
+        
+#         try:  
+#             #Μετατροπή του input σε int για να πιάσει ο exception handler τον λάθος χαρακτήρα
+#             option=int(input("Επιλέξτε 1 έως 6 για να συνεχίσετε ή 0 για έξοδο:"))
+#             if option == 1:
+#                 print("add_recipe")
+#                 #add_recipe()
+#             elif option == 2:
+#                 print("search_recipe")
+#                 #search_recipe()
+#             elif option == 3:
+#                 print("edit_recipes")
+#                 edit_recipes()
+#             elif option == 4:
+#                 print("delete_recipe")
+#                 delete_recipe()
+#             elif option == 5:
+#                 print("execute_recipe")
+#                 #execute_recipe()
+#             elif option == 6:
+#                 print("cost_recipe")
+#                 #cost_recipe()
+#             elif option == 0:
+#                 print("Goodbye!")
+#                 break
+#             else:
+#                 print("Λάθος επιλογή") 
+#         except ValueError:
+#             print("Η επιλογή γίνεται μόνο με αριθμούς από το 0 έως το 6")
+
+# main()
