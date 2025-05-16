@@ -1,7 +1,6 @@
 import json
 from add_recipes import *
 
-#to r εδω χρησιμεύει στο να μην εκλαμβάνονται τα \ σαν escape characters
 #file_name = r"C:\Users\Kostis\Desktop\team project\recipes.json"
 file_name="recipes.json"
 
@@ -49,7 +48,6 @@ def edit_recipes():
 
     #Επανάληψη για το menu
     while True:
-        print("Η συνταγή βρέθηκε")
         print("1. Τροποποίηση Ονόματος")
         print("2. Τροποποίηση Κατηγορίας")
         print("3. Τροποποίηση Δυσκολίας")
@@ -390,48 +388,3 @@ def delete_recipe():
         except ValueError:
             print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
 
-
-
-#Κεντρικό μενού ===============================================================================
-# def main():
-   
-#     while True:
-#         print("============Συνταγές=============")
-#         print("1. Καταχώρηση καινούριας συνταγής")
-#         print("2. Αναζήτηση συνταγής")
-#         print("3. Τροποποίηση συνταγής")
-#         print("4. Διαγραφή συνταγής")
-#         print("5. Εκτέλεση συνταγή")
-#         print("6. Έλεγχος κόστους συνταγής")
-#         print("0. Έξοδος από την εφαρμογή")
-        
-#         try:  
-#             #Μετατροπή του input σε int για να πιάσει ο exception handler τον λάθος χαρακτήρα
-#             option=int(input("Επιλέξτε 1 έως 6 για να συνεχίσετε ή 0 για έξοδο:"))
-#             if option == 1:
-#                 print("add_recipe")
-#                 #add_recipe()
-#             elif option == 2:
-#                 print("search_recipe")
-#                 #search_recipe()
-#             elif option == 3:
-#                 print("edit_recipes")
-#                 edit_recipes()
-#             elif option == 4:
-#                 print("delete_recipe")
-#                 delete_recipe()
-#             elif option == 5:
-#                 print("execute_recipe")
-#                 #execute_recipe()
-#             elif option == 6:
-#                 print("cost_recipe")
-#                 #cost_recipe()
-#             elif option == 0:
-#                 print("Goodbye!")
-#                 break
-#             else:
-#                 print("Λάθος επιλογή") 
-#         except ValueError:
-#             print("Η επιλογή γίνεται μόνο με αριθμούς από το 0 έως το 6")
-
-# main()
