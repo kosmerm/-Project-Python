@@ -37,7 +37,7 @@ def main():
                 print("cost_recipe")
                 calculate_cost()
             elif option == 0:
-                print("Goodbye!")
+                print("Έξοδος από την εφαρμογή.")
                 break
             else:
                 print("Λάθος επιλογή") 
