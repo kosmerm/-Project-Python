@@ -24,24 +24,6 @@ def view_recipes():
     for i, recipe in enumerate(recipes, start=1):
         print(f"{i}. {recipe['title']} ({recipe['time']})")
 
-# Προσθήκη νέας συνταγής
-def add_recipe():
-    title = input("Τίτλος συνταγής: ")
-    time = input("Χρόνος προετοιμασίας: ")
-    ingredients = input("Υλικά (χώρισε τα με κόμμα): ").split(",")
-    steps = input("Βήματα (χώρισε τα με '|'): ").split("|")
-
-    new_recipe = {
-        "title": title,
-        "time": time,
-        "ingredients": [i.strip() for i in ingredients],
-        "steps": [s.strip() for s in steps]
-    }
-
-    recipes = load_recipes()
-    recipes.append(new_recipe)
-    save_recipes(recipes)
-    print(" Η συνταγή προστέθηκε!")
 
 # Αναζήτηση συνταγής
 def search_recipe():
@@ -65,18 +47,18 @@ def main():
     while True:
         print("\n   Διαχείριση Συνταγών")
         print("1. Δες όλες τις συνταγές")
-        print("2. Πρόσθεσε νέα συνταγή")
-        print("3. Αναζήτηση συνταγής")
-        print("4. Έξοδος")
+
+        print("2. Αναζήτηση συνταγής")
+        print("3. Έξοδος")
 
         choice = input("Επιλογή: ")
         if choice == "1":
             view_recipes()
+
+
         elif choice == "2":
-            add_recipe()
-        elif choice == "3":
             search_recipe()
-        elif choice == "4":
+        elif choice == "3":
             break
         else:
             print("  Άκυρη επιλογή.")
