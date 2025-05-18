@@ -1,19 +1,18 @@
-from json_manager import *
-# import json
+import json
 
-# # Διαδρομές αρχείων
-# RECIPES_FILE = 'recipes.json'
-# PRODUCTS_FILE = 'products.json'
+# Διαδρομές αρχείων
+RECIPES_FILE = 'recipes.json'
+PRODUCTS_FILE = 'products.json'
 
-# # Φορτώνει δεδομένα από JSON αρχεία
-# def load_json(filename):
-#     with open(filename, 'r', encoding='utf-8') as f:
-#         return json.load(f)
+# Φορτώνει δεδομένα από JSON αρχεία
+def load_json(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
-# # Αποθηκεύει δεδομένα σε JSON αρχεία
-# def save_json(filename, data):
-#     with open(filename, 'w', encoding='utf-8') as f:
-#         json.dump(data, f, indent=4, ensure_ascii=False)
+# Αποθηκεύει δεδομένα σε JSON αρχεία
+def save_json(filename, data):
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
 # Υπολογισμός κόστους συνταγής και ενημέρωση στο αρχείο
 def calculate_recipe_cost(recipe, product_prices):
@@ -33,7 +32,7 @@ def calculate_recipe_cost(recipe, product_prices):
         if r['name'] == recipe['name']:
             r['cost'] = cost
             break
-    save_products("recipes.json", recipes_data)
+    save_json(RECIPES_FILE, recipes_data)
 
     return cost
 
@@ -73,7 +72,7 @@ def update_product_price():
     print("⚠ Δεν βρέθηκε το προϊόν.")
 
 # Απλό menu για χρήση
-def main_menu():
+def calculate_cost():
     while True:
         print("\n--- MENU ---")
         print("1. Υπολογισμός κόστους συνταγών")
@@ -88,7 +87,3 @@ def main_menu():
             break
         else:
             print("⚠ Μη έγκυρη επιλογή.")
-
-# Εκκίνηση εφαρμογής
-if __name__ == '__main__':
-    main_menu()
