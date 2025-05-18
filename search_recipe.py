@@ -1,6 +1,6 @@
 import json
 import os
-import json_manager import *
+from json_manager import *
 
 FILE_NAME = "recipes.json"
 
