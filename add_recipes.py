@@ -1,3 +1,4 @@
+from json_manager import load_recipes, save_recipes
 # Το όνομα της συνταγής
 def create_name():
     name = input("Καταχωρίστε το όνομα της συνταγής (π.χ. μακαρόνια με κιμά): ")
