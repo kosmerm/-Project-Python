@@ -1,22 +1,23 @@
 import json
 import os
+import json_manager import *
 
 FILE_NAME = "recipes.json"
 
 # Αν το αρχείο δεν υπάρχει, δημιουργείται ένα κενό
-if not os.path.exists(FILE_NAME):
-    with open(FILE_NAME, "w",encoding="utf-8") as f:
-        json.dump([], f)
+# if not os.path.exists(FILE_NAME):
+#     with open(FILE_NAME, "w",encoding="utf-8") as f:
+#         json.dump([], f)
 
-# Φόρτωση των συνταγών
-def load_recipes():
-    with open(FILE_NAME, "r",encoding="utf-8") as f:
-        return json.load(f)
+# # Φόρτωση των συνταγών
+# def load_recipes():
+#     with open(FILE_NAME, "r",encoding="utf-8") as f:
+#         return json.load(f)
 
-# Αποθήκευση των συνταγών
-def save_recipes(recipes):
-    with open(FILE_NAME, "w",encoding="utf-8") as f:
-        json.dump(recipes, f, indent=4, ensure_ascii=False)
+# # Αποθήκευση των συνταγών
+# def save_recipes(recipes):
+#     with open(FILE_NAME, "w",encoding="utf-8") as f:
+#         json.dump(recipes, f, indent=4, ensure_ascii=False)
 
 # Προβολή όλων των συνταγών
 def view_recipes():
