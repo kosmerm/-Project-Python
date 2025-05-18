@@ -1,4 +1,3 @@
-import json
 # Το όνομα της συνταγής
 def create_name():
     name = input("Καταχωρίστε το όνομα της συνταγής (π.χ. μακαρόνια με κιμά): ")
@@ -122,23 +121,3 @@ def create_recipe():
     data["recipes"].append(recipe)
     with open("recipes.json", "w", encoding = "UTF-8") as file:
         json.dump(data, file, ensure_ascii = False, indent = 2)
-# 2. Αναζήτηση συνταγής
-def search_recipe():
-    pass
-# 3. Τροποποίηση της συνταγής
-def update_recipe():
-    pass
-# 4. Διαγραφή της συνταγής
-def delete_recipe():
-    pass
-# 5. Εκτέλεση συνταγής
-def execute_recipe():
-    pass
-# 6. Υπολογισμός κόστους συνταγής
-def calculate_cost():
-    pass
-# Κυρίως πρόγραμμα
-def main():
-    pass
-if __name__ == "__main__":
-    main()
