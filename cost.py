@@ -90,13 +90,16 @@ def calculate_cost():
         print("\n--- MENU ---")
         print("1. Υπολογισμός κόστους συνταγών")
         print("2. Τροποποίηση τιμής προϊόντος")
-        print("3. Έξοδος")
+        print("3. Διαγραφή προϊόντος")
+        print("4. Έξοδος")
         choice = input("Επιλογή: ").strip()
         if choice == '1':
             show_all_recipe_costs()
         elif choice == '2':
             update_product_price()
-        elif choice == '3':
+        elif choice == "3":
+            delete_product()
+        elif choice == '4':
             break
         else:
             print("⚠ Μη έγκυρη επιλογή.")
