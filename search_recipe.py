@@ -30,10 +30,10 @@ def view_recipes():
 def search_recipe():
     keyword = input("Δώσε λέξη-κλειδί για τίτλο: ").lower()
     recipes = load_recipes("recipes.json")
-    found = [r for r in recipes if keyword in r["title"].lower()]
+    found = [r for r in recipes if keyword in r["name"].lower()]
     if found:
         for recipe in found:
-            print(f"\n {recipe['title']} ({recipe['time']})")
+            print(f"\n {recipe['name']} ({recipe['total_time']})")
             print("Υλικά:")
             for ing in recipe["ingredients"]:
                 print(f" - {ing}")
