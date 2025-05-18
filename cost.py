@@ -1,18 +1,19 @@
-import json
+from json_manager import *
+# import json
 
-# Διαδρομές αρχείων
-RECIPES_FILE = 'recipes.json'
-PRODUCTS_FILE = 'products.json'
+# # Διαδρομές αρχείων
+# RECIPES_FILE = 'recipes.json'
+# PRODUCTS_FILE = 'products.json'
 
-# Φορτώνει δεδομένα από JSON αρχεία
-def load_json(filename):
-    with open(filename, 'r', encoding='utf-8') as f:
-        return json.load(f)
+# # Φορτώνει δεδομένα από JSON αρχεία
+# def load_json(filename):
+#     with open(filename, 'r', encoding='utf-8') as f:
+#         return json.load(f)
 
-# Αποθηκεύει δεδομένα σε JSON αρχεία
-def save_json(filename, data):
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+# # Αποθηκεύει δεδομένα σε JSON αρχεία
+# def save_json(filename, data):
+#     with open(filename, 'w', encoding='utf-8') as f:
+#         json.dump(data, f, indent=4, ensure_ascii=False)
 
 # Υπολογισμός κόστους συνταγής και ενημέρωση στο αρχείο
 def calculate_recipe_cost(recipe, product_prices):
