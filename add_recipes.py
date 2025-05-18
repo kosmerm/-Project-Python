@@ -1,4 +1,4 @@
-from json_manager import load_recipes, save_recipes
+from json_manager import load_recipes, save_recipes, load_products, add_product_if_not_exists
 # Το όνομα της συνταγής
 def create_name():
     name = input("Καταχωρίστε το όνομα της συνταγής (π.χ. μακαρόνια με κιμά): ")
@@ -42,8 +42,11 @@ def create_ingredients():
                 break
             except:
                 print("Κάτι πήγε στραβά.")
+    data = load_products("products.json")
     for i in range(0, number_of_ingredients):
         name_of_ingredient = input(f"Καταχωρίστε το όνομα του {i + 1}ου υλικού (π.χ. σπαγγέτι): ")
+        if name_of_ingredient not in data["products"]:
+            add_product_if_not_exists()
         while True:
             quantity = input(f"Καταχωρίστε την ποσότητα του {i + 1}ου υλικού σε γραμμάρια (π.χ. 500): ")
             if quantity == "":
