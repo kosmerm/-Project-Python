@@ -117,8 +117,6 @@ def create_recipe():
         "steps": steps,
         "portions": portions
     }
-    with open("recipes.json", "r", encoding = "UTF-8") as file:
-        data = json.load(file)
+    load_recipes("recipes.json")
     data["recipes"].append(recipe)
-    with open("recipes.json", "w", encoding = "UTF-8") as file:
-        json.dump(data, file, ensure_ascii = False, indent = 2)
+    save_recipes(data, "recipes.json")
