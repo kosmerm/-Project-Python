@@ -117,6 +117,6 @@ def create_recipe():
         "steps": steps,
         "portions": portions
     }
-    load_recipes("recipes.json")
+    data = load_recipes("recipes.json")
     data["recipes"].append(recipe)
     save_recipes(data, "recipes.json")
