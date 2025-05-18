@@ -1,4 +1,5 @@
 import json
+from json_manager import *
 from add_recipes import *
 
 #file_name = r"C:\Users\Kostis\Desktop\team project\recipes.json"
@@ -232,7 +233,7 @@ def edit_ingredients(recipe):
         if option == 1:
             products=load_products("products.json")
             print("Τα διαθέσιμα υλικά είναι:")
-            for i, prod in enumerate(products, start=1):
+            for i, prod in enumerate(products["products"], start=1):
                 print(f"{i}. {prod['name']} ({prod['price_per_kg']})")
             
             new_ingredient_name = input("Καταχωρήστε το όνομα του υλικού: ").strip()
@@ -399,4 +400,3 @@ def delete_recipe():
                 break
         except ValueError:
             print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
-
