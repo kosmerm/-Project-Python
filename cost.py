@@ -1,57 +1,27 @@
-import json
-
-# Διαδρομές αρχείων
-RECIPES_FILE = 'recipes.json'
-PRODUCTS_FILE = 'products.json'
-
-# Φορτώνει δεδομένα από JSON αρχεία
-def load_json(filename):
-    with open(filename, 'r', encoding='utf-8') as f:
-        return json.load(f)
-
-# Αποθηκεύει δεδομένα σε JSON αρχεία
-def save_json(filename, data):
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+from json_manager import load_recipes, save_recipes, load_products, save_products
 
 # Υπολογισμός κόστους συνταγής και ενημέρωση στο αρχείο
-def calculate_recipe_cost(recipe, product_prices):
+def calculate_recipe_cost():
+    data = load_recipes("recipes.json")
     total_cost = 0.0
-    for ingredient in recipe['ingredients']:
+    for i, recipe in enumerate(data["recipes"]):
+        print(f"{i + 1}. {recipe['name']}")
+    choice = int(input("Επίλεξε συνταγή για υπολογισμό κόστους: "))
+    products = load_products("products.json")
+    for ingredient in data["recipes"][choice - 1]["ingredients"]:
         name = ingredient['name']
         quantity = ingredient['quantity']
-        if quantity and name in product_prices:
-            total_cost += (quantity / 1000) * product_prices[name]
-
+        for product in products["products"]:
+            if product["name"] == name:
+                total_cost += (quantity / 1000) * product["price_per_kg"]
+                break
     cost = round(total_cost, 2)
-    recipe['cost'] = cost  # Ενημερώνει το λεξικό της συνταγής
-
-    # Ενημέρωση στο αρχείο recipes.json
-    recipes_data = load_json(RECIPES_FILE)
-    for r in recipes_data['recipes']:
-        if r['name'] == recipe['name']:
-            r['cost'] = cost
-            break
-    save_json(RECIPES_FILE, recipes_data)
-
-    return cost
-
-# Εμφάνιση κόστους όλων των συνταγών
-def show_all_recipe_costs():
-    recipes_data = load_json(RECIPES_FILE)
-    product_prices = {
-        product['name']: product['price_per_kg']
-        for product in load_json(PRODUCTS_FILE)['products']
-    }
-
-    for recipe in recipes_data['recipes']:
-        name = recipe['name']
-        cost = calculate_recipe_cost(recipe, product_prices)
-        print(f"Συνταγή: {name} -> Κόστος: {cost}€")
+    data['recipes'][choice - 1]["cost"] = cost # Ενημερώνει το λεξικό της συνταγής
+    save_recipes(data, "recipes.json")
 
 # Τροποποίηση τιμής προϊόντος
 def update_product_price():
-    products_data = load_json(PRODUCTS_FILE)
+    products_data = load_products("products.json")
     print("\nΔιαθέσιμα προϊόντα:")
     for product in products_data['products']:
         name = product['name']
@@ -67,34 +37,34 @@ def update_product_price():
             try:
                 new_price = float(input("Νέα τιμή (€): "))
                 product['price_per_kg'] = new_price
-                save_json(PRODUCTS_FILE, products_data)
-                print("✅ Η τιμή ενημερώθηκε.")
+                save_products(products_data, "products.json")
+                print("Η τιμή ενημερώθηκε.")
                 return
             except ValueError:
-                print("⚠ Μη έγκυρη τιμή.")
+                print("Μη έγκυρη τιμή.")
                 return
 
-    print("⚠ Δεν βρέθηκε το προϊόν.")
+    print("Δεν βρέθηκε το προϊόν.")
 
 def delete_product():
-    data = load_json("products.json")
+    data = load_products("products.json")
     for i, product in enumerate(data["products"]):
         print(f"{i + 1}. {product['name']}")
     choice = int(input("Επίλεξε αριθμό προϊόντος για διαγραφή: "))
     data["products"].pop(choice - 1)
-    save_json("products.json", data)
+    save_products(data, "products.json")
 
 # Απλό menu για χρήση
 def calculate_cost():
     while True:
         print("\n--- MENU ---")
-        print("1. Υπολογισμός κόστους συνταγών")
+        print("1. Υπολογισμός κόστους συνταγής")
         print("2. Τροποποίηση τιμής προϊόντος")
         print("3. Διαγραφή προϊόντος")
         print("4. Έξοδος")
         choice = input("Επιλογή: ").strip()
         if choice == '1':
-            show_all_recipe_costs()
+            calculate_recipe_cost()
         elif choice == '2':
             update_product_price()
         elif choice == "3":
@@ -102,4 +72,4 @@ def calculate_cost():
         elif choice == '4':
             break
         else:
-            print("⚠ Μη έγκυρη επιλογή.")
+            print("Μη έγκυρη επιλογή.")
