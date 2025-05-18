@@ -52,16 +52,20 @@ def show_all_recipe_costs():
 # Τροποποίηση τιμής προϊόντος
 def update_product_price():
     products_data = load_json(PRODUCTS_FILE)
-    names = [p['name'] for p in products_data['products']]
     print("\nΔιαθέσιμα προϊόντα:")
-    for name in names:
-        print(f"- {name}")
-    name = input("\nΠοιο προϊόν θες να αλλάξεις; ").strip()
+    for product in products_data['products']:
+        name = product['name']
+        price = product['price_per_kg']
+        print(f"- {name} ({price:.2f} €/kg)")
+
+    name = input("\nΠοιο προϊόν θες να αλλάξεις; ").strip().lower()
 
     for product in products_data['products']:
-        if product['name'] == name:
+        if product['name'].lower() == name:
+            current_price = product['price_per_kg']
+            print(f"Τρέχουσα τιμή για '{product['name']}': {current_price:.2f} €/kg")
             try:
-                new_price = float(input(f"Νέα τιμή για '{name}' (€): "))
+                new_price = float(input("Νέα τιμή (€): "))
                 product['price_per_kg'] = new_price
                 save_json(PRODUCTS_FILE, products_data)
                 print("✅ Η τιμή ενημερώθηκε.")
@@ -69,6 +73,7 @@ def update_product_price():
             except ValueError:
                 print("⚠ Μη έγκυρη τιμή.")
                 return
+
     print("⚠ Δεν βρέθηκε το προϊόν.")
 
 # Απλό menu για χρήση
