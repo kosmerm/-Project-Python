@@ -25,7 +25,7 @@ def save_recipes(recipes, file_name):
 def load_products(file_name):
     try:
         with open(file_name, "r", encoding="utf-8") as f:
-            return json.load(f).get("products", [])
+            return json.load(f)
     except FileNotFoundError:
         return []
     except Exception as e:
@@ -35,7 +35,7 @@ def load_products(file_name):
 def save_products(products, file_name):
     try:
         with open(file_name, "w", encoding="utf-8") as f:
-            json.dump({"products": products}, f, indent=2, ensure_ascii=False)
+            json.dump(products, f, indent=2, ensure_ascii=False)
     except Exception as e:
         print(f"Σφάλμα αποθήκευσης προϊόντων: {e}")
 
