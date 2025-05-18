@@ -33,7 +33,7 @@ def calculate_recipe_cost(recipe, product_prices):
         if r['name'] == recipe['name']:
             r['cost'] = cost
             break
-    save_json(RECIPES_FILE, recipes_data)
+    save_products("recipes.json", recipes_data)
 
     return cost
 
