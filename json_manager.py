@@ -16,7 +16,7 @@ def save_recipes(recipes, file_name):
     try:
         with open(file_name, "w", encoding="utf-8") as f:
             json.dump(recipes, f, indent=2, ensure_ascii=False)
-        print("Η τροποποίηση αποθηκεύτηκε στο αρχείο JSON με επιτυχία!")
+        print("Επιτυχής αποθήκευση!")
     except Exception as e:
         print(f"Σφάλμα κατά την αποθήκευση: {e}")
 
