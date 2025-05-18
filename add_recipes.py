@@ -45,8 +45,13 @@ def create_ingredients():
     data = load_products("products.json")
     for i in range(0, number_of_ingredients):
         name_of_ingredient = input(f"Καταχωρίστε το όνομα του {i + 1}ου υλικού (π.χ. σπαγγέτι): ")
-        if name_of_ingredient not in data["products"]:
-            add_product_if_not_exists()
+        found = False
+        for product in data["products"]:
+            if product["name"] == name_of_ingredient:
+                found = True
+                break
+        if not found:
+            add_product_if_not_exists(data, name_of_ingredient, "products.json")
         while True:
             quantity = input(f"Καταχωρίστε την ποσότητα του {i + 1}ου υλικού σε γραμμάρια (π.χ. 500): ")
             if quantity == "":
