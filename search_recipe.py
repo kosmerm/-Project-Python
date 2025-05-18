@@ -21,7 +21,7 @@ FILE_NAME = "recipes.json"
 
 # Προβολή όλων των συνταγών
 def view_recipes():
-    recipes = load_recipes()
+    recipes = load_recipes("recipes.json")
     for i, recipe in enumerate(recipes, start=1):
         print(f"{i}. {recipe['title']} ({recipe['time']})")
 
@@ -29,7 +29,7 @@ def view_recipes():
 # Αναζήτηση συνταγής
 def search_recipe():
     keyword = input("Δώσε λέξη-κλειδί για τίτλο: ").lower()
-    recipes = load_recipes()
+    recipes = load_recipes("recipes.json")
     found = [r for r in recipes if keyword in r["title"].lower()]
     if found:
         for recipe in found:
