@@ -76,6 +76,14 @@ def update_product_price():
 
     print("⚠ Δεν βρέθηκε το προϊόν.")
 
+def delete_product():
+    data = load_json("products.json")
+    for i, product in enumerate(data["products"]):
+        print(f"{i + 1}. {product['name']}")
+    choice = int(input("Επίλεξε αριθμό προϊόντος για διαγραφή: "))
+    data["products"].pop(choice - 1)
+    save_json("products.json", data)
+
 # Απλό menu για χρήση
 def calculate_cost():
     while True:
