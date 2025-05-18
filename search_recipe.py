@@ -1,4 +1,4 @@
-from json_manager import *
+from json_manager import load_recipes
 
 data = load_recipes("recipes.json")
 
