@@ -186,10 +186,10 @@ def edit_recipes():
     # Εμφάνιση συνταγών
     while True:
         print("Διαθέσιμες συνταγές:")
-        i=0
 
+        #Εμφάνιση όνομα συνταγών με έναν αριθμό μπροστά για έυκολη επιλογή από τον χρήστη
         for i, recipe in enumerate(data_recipes["recipes"]):
-            print(f"{i + 1}. Συνταγή: {data['recipes'][i]['name']}")
+            print(f"{i + 1}. Συνταγή: {recipe['name']}")
         
         try:
             recipe_number = int(input("Δώστε τον αριθμό της συνταγής που θέλετε να τροποποιήσετε ή πατήστε 0 για έξοδο: "))
@@ -202,7 +202,7 @@ def edit_recipes():
         except ValueError:
             print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
         
-    #εισαγωγή της συνταγής που επιλέξαμε σε μεταβλητή
+    #εισαγωγή της συνταγής που επιλέξαμε σε μεταβλητή που θα μπει παράμετρος στις υπόλοιπες συναρτήσεις τροποποίησης
     recipe = data_recipes["recipes"][recipe_number - 1]
 
     #Επανάληψη για το menu
@@ -249,12 +249,13 @@ def edit_name(recipe):
         print(f"Το όνομα της συνταγής είναι {recipe["name"]}")
         #Επανάληψη ώστε να δίνει την δυνατότηα στον χρήστη να επιλέξει ξανά και για ασφάλεια
         while True:
-            option=input("Εάν θέλετε να αλλάξετε το όνομα της συνταγής πατήστε 'y' αλλιώς 'n' για έξοδο:")
+            option=input("Είστε σίγουροι ότι θέλετε να αλλάξετε το όνομα της συνταγής? πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
                 new_name = input("Δώστε το νέο όνομα της συνταγής: ").strip()
                 if new_name:
                     recipe["name"] = new_name
                     print("Το όνομα ενημερώθηκε!")
+                    return
                 else:
                     print("Το όνομα δεν μπορεί να είναι κενό! Η αλλαγή ακυρώθηκε.")
             elif option=="n":
@@ -273,16 +274,23 @@ def edit_category(recipe):
     if recipe["category"]:
         print(f"Η συνταγή ανήκει στην κατηγορία {recipe["category"]}")
         while True:
-            option=input("Εάν θέλετε να αλλάξετε την κατηγορία της συνταγής πατήστε 'y' αλλιώς 'n' για έξοδο:")
+            option=input("Είστε σίγουροι ότι θέλετε να αλλάξετε την κατηγορία της συνταγής? πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
-                category = input("Καταχωρήστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
-                while category != "δημητριακά" and category != "φρούτα" and category != "λαχανικά" and category != "γαλακτοκομικά" and category != "κρέας & προϊόντα" and category != "όσπρια" and category != "λίπη & έλαια" and category != "τρόφιμα με πολύ λίπος ή ζάχαρη":
-                    category = input("Καταχωρήστε την κατηγορία της συνταγής (δημητριακά, φρούτα, λαχανικά, γαλακτοκομικά, κρέας & προϊόντα, όσπρια, λίπη & έλαια, τρόφιμα με πολύ λίπος ή ζάχαρη): ")
-                if category:
-                    recipe["category"] = category   #Από ΕΔΩ ΑΛΛΑΖΕΙ ΣΤΟ ΑΡΧΕΙΟ
-                    print("Η κατηγορία ενημερώθηκε!")
-                else:
-                    print("Η κατηγορία δεν μπορεί να είναι κενή! Η αλλαγή ακυρώθηκε.")
+                categories = ["δημητριακά", "φρούτα", "λαχανικά", "γαλακτοκομικά", "κρέας & προϊόντα", "όσπρια", "λίπη & έλαια", "τρόφιμα με πολύ λίπος ή ζάχαρη"]
+                for i, category in enumerate(categories):
+                    print(f"{i + 1}. {category}")
+                while True:
+                    try:
+                        choice = int(input(f"Καταχωρίστε την κατηγορία της συνταγής (1-8): "))
+                        if choice < 1 or choice > 8:
+                            continue
+                        else:
+                            recipe["category"] = categories[choice-1]
+                            print("Η κατηγορία ενημερώθηκε!")
+                            return
+                    except:
+                        print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
+                        
             elif option=="n":
                 return
             else:
@@ -298,20 +306,22 @@ def edit_difficulty(recipe):
     if recipe["difficulty"]:
         print(f"Η συνταγή έχει δυσκολία {recipe["difficulty"]}")
         while True:
-            option=input("Εάν θέλετε να αλλάξετε τον βαθμό της δυσκολίας πατήστε 'y' αλλιώς 'n' για έξοδο:")
+            option=input("Είστε σίγουροι ότι θέλετε να αλλάξετε τον βαθμό της δυσκολίας? πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
-                difficulty = input("Καταχωρήστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
-                while difficulty != "εύκολη" and difficulty != "μεσαία" and difficulty != "δύσκολη":
-                    difficulty = input("Καταχωρήστε τον βαθμό δυσκολίας (εύκολη, μεσαία, δύσκολη): ")
-                if difficulty:
-                    recipe["difficulty"]=difficulty
-                    print("Η δυσκολία ενημερώθηκε!")
-                else:
-                    print("Η δυσκολία δεν μπορεί να είναι κενή! Η αλλαγή ακυρώθηκε.")
-            elif option=="n":
-                return
-            else:
-                print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
+                difficulties = ["εύκολη", "μεσαία", "δύσκολη"]
+            for i, difficulty in enumerate(difficulties):
+                print(f"{i + 1}. {difficulty}")
+            while True:
+                try:
+                    difficulty = int(input("Καταχωρίστε τον βαθμό δυσκολίας (1-3): "))
+                    if difficulty < 1 or difficulty > 3:
+                        continue
+                    else:
+                        recipe["difficulty"] = difficulties[difficulty-1]
+                        print("Η δυσκολία ενημερώθηκε!")
+                        return 
+                except:
+                    print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
     else:
         print("Δεν βρέθηκε η δυσκολία της συνταγής.Παρακαλώ εκχωρήστε την από την αρχή")  
         create_difficulty()  
@@ -323,14 +333,14 @@ def edit_total_time(recipe):
     if recipe["total_time"]:
         print(f"Η συνταγή έχει συνολική διάρκεια υλοποίησης {recipe["total_time"]}")
         while True:
-            option=input("Εάν θέλετε να αλλάξετε την συνολική διάρκεια υλοποίησης πατήστε 'y' αλλιώς 'n' για έξοδο:")
+            option=input("Είστε σίγουροι ότι θέλετε να αλλάξετε την συνολική διάρκεια υλοποίησης? πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
                 try:
                     total_time = float(input("Καταχωρήστε τον συνολικό χρόνο εκτέλεσης σε λεπτά (π.χ. 65): "))
                     if total_time:
                         recipe["total_time"]=total_time
                         print("Η συνολική διάρκεια ενημερώθηκε!")
-                        break
+                        return
                     else:
                         print("Η συνολική διάρκεια δεν μπορεί να είναι κενή! Η αλλαγή ακυρώθηκε.")
                 except ValueError:
@@ -350,7 +360,7 @@ def edit_ingredients(recipe):
     #Εμφάνιση των ήδη υπάρχοντων υλικών
     #Η καθε sudagh είναι μία θέση του πίνακα sudages , οπότε το sudagh['ingredients'] περιέχει μία μεγάλη λίστα
     #από λεξικά υλικών με name και ποσότητα keys.
-    #Άρα εάν πάρεις for item in sudagh['ingredients'] τοτε το καθε item εχει item['name'] και item['quantity']
+    #Άρα εάν κάνουμε for item in sudagh['ingredients'] τοτε το καθε item εχει item['name'] και item['quantity']
 
 
     if not recipe["ingredients"]:
@@ -375,7 +385,7 @@ def edit_ingredients(recipe):
                 print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
         else:
             print("Η λίστα των υλικών είναι κενή.")
-            return
+            create_ingredients()
             
         
     #εισαγωγή του υλικού που επιλέξαμε για τροποποίηση σε μία μεταβλητή
@@ -602,7 +612,7 @@ def calculate_recipe_cost():
                 break
     cost = round(total_cost, 2)
     data_recipes['recipes'][choice - 1]["cost"] = cost # Ενημερώνει το λεξικό της συνταγής
-    save_recipes(data, "recipes.json")
+    save_recipes(data_recipes, "recipes.json")
 
 # Τροποποίηση τιμής προϊόντος
 def update_product_price():
