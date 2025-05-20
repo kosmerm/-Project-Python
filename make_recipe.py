@@ -1,44 +1,41 @@
-from json_manager import load_recipes
 
-# Φόρτωση των συνταγών από το JSON αρχείο
+import json
+import time
+from tqdm import tqdm
 
-data = load_recipes("recipes.json")
+def load_recipes(filename="recipes.json"):
+    with open(filename, 'r', encoding='utf-8') as file:
+        return json.load(file)
 
-# Συνάρτηση για εμφάνιση υλικών
-def display_ingredients(ingredients):
-    print("\nΥλικά:")
-    for item in ingredients:
-        qty = item["quantity"]
-        name = item["name"]
-        if qty is not None:
-            print(f"- {name} ({qty} γρ.)")
-        else:
-            print(f"- {name}")
+def execute_recipe():
+    data = load_recipes()
+    recipes = data["recipes"]
 
-# Συνάρτηση για εμφάνιση βημάτων
-def display_steps(steps):
-    print("\nΒήματα εκτέλεσης:")
-    for i, step in enumerate(steps, 1):
-        print(f"{i}. {step}")
-
-# Συνάρτηση για εμφάνιση όλων των διαθέσιμων συνταγών
-def list_recipes():
-    print("\nΔιαθέσιμες συνταγές:")
-    for i, recipe in enumerate(data["recipes"], 1):
+    print("\n📋 Διαθέσιμες συνταγές:")
+    for i, recipe in enumerate(recipes, 1):
         print(f"{i}. {recipe['name']}")
 
-# Συνάρτηση κύριας ροής του προγράμματος
-while True:
-    list_recipes()
     choice = input("\nΔιάλεξε αριθμό συνταγής ή 'q' για έξοδο: ")
     if choice.lower() == 'q':
-        print("Έξοδος από το πρόγραμμα. Καλή όρεξη!")
-        break
-    if not choice.isdigit() or int(choice) < 1 or int(choice) > len(data["recipes"]):
-        print("Μη έγκυρη επιλογή. Προσπάθησε ξανά.")
-        continue
-    recipe = data["recipes"][int(choice) - 1]
-    print(f"\nΣυνταγή: {recipe['name']}")
-    display_ingredients(recipe['ingredients'])
-    display_steps(recipe['steps'])
-    input("\nΠάτησε Enter για να επιστρέψεις στο μενού...")
+        return
+
+    if not choice.isdigit() or not (1 <= int(choice) <= len(recipes)):
+        print("Μη έγκυρη επιλογή.")
+        return
+
+    recipe = recipes[int(choice) - 1]
+    print(f"\n🍽️ {recipe['name']}")
+    print(f"Κατηγορία: {recipe['category']}")
+    print(f"Δυσκολία: {recipe['difficulty']}")
+    print(f"Χρόνος: {recipe['total_time']} λεπτά")
+
+    print("\n🧾 Υλικά:")
+    for ing in recipe["ingredients"]:
+        qty = f" ({ing['quantity']} γρ)" if ing["quantity"] else ""
+        print(f"- {ing['name']}{qty}")
+
+    print("\n🧑‍🍳 Εκτέλεση:")
+    for i, step in enumerate(recipe["steps"], 1):
+        input(f"\nΒήμα {i}: {step}\nΠάτησε Enter για να συνεχίσεις...")
+        for _ in tqdm(range(30), desc="Επεξεργασία...", ncols=60):
+            time.sleep(0.01)
