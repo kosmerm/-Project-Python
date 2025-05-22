@@ -387,7 +387,6 @@ def edit_total_time(recipe):
 
 
 #Συνάρτηση τροποποίησης υλικών ==================================================================================
-#Συνάρτηση τροποποίησης υλικών ==================================================================================
 def edit_ingredients(recipe):
     #Εμφάνιση των ήδη υπάρχοντων υλικών
     #Η καθε sudagh είναι μία θέση του πίνακα sudages , οπότε το sudagh['ingredients'] περιέχει μία μεγάλη λίστα
@@ -422,6 +421,8 @@ def edit_ingredients(recipe):
         
     #εισαγωγή του υλικού που επιλέξαμε για τροποποίηση σε μία μεταβλητή
     ingredient=recipe["ingredients"][ingredient_number-1]
+
+    data_products=load_products("products.json")
     while True:
         print(f"Τροποποίηση {ingredient["name"]}:")
         print("1. Τροποποίηση Ονόματος")
@@ -430,21 +431,12 @@ def edit_ingredients(recipe):
 
         option = int(input("Επιλέξτε 1 έως 2 για να συνεχίσετε ή 0 για έξοδο: "))
 
-        if option == 1:
-            products=load_products("products.json")
-            print("Τα διαθέσιμα υλικά είναι:")
-            for i, prod in enumerate(products["products"], start=1):
-                print(f"{i}. {prod['name']} ({prod['price_per_kg']})")
-            
+        if option == 1:          
             new_ingredient_name = input("Καταχωρήστε το όνομα του υλικού: ").strip()
             if new_ingredient_name:
                 ingredient["name"] = new_ingredient_name
                 print("Το όνομα ενημερώθηκε!")
-
-                # Έλεγχος και προσθήκη στο products.json
-                
-                add_product_if_not_exists(products, new_ingredient_name ,"products.json")
-
+                add_product_if_not_exists(data_products,new_ingredient_name,"products.json")
             else:
                 print("Το όνομα δεν μπορεί να είναι κενό!")
         elif option == 2:
