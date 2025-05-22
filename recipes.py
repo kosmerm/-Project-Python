@@ -1,4 +1,6 @@
 from json_manager import *
+import time
+from tqdm import tqdm
 
 # Stelios Fragkou
 
@@ -18,7 +20,7 @@ def create_category():
             if choice < 1 or choice > 8:
                 continue
             else:
-                return choice
+                return categories[choice - 1]
         except:
             print("Κάτι πήγε στραβά.")
 
@@ -29,11 +31,11 @@ def create_difficulty():
         print(f"{i + 1}. {difficulty}")
     while True:
         try:
-            difficulty = int(input("Καταχωρίστε τον βαθμό δυσκολίας (1-3): "))
-            if difficulty < 1 or difficulty > 3:
+            choice = int(input("Καταχωρίστε τον βαθμό δυσκολίας (1-3): "))
+            if choice < 1 or choice > 3:
                 continue
             else:
-                return difficulty
+                return difficulties[choice - 1]
         except:
             print("Κάτι πήγε στραβά.")
 
@@ -53,6 +55,7 @@ def create_total_time():
 
 # Τα υλικά της συνταγής
 def create_ingredients():
+    products = load_products("products.json")
     ingredients = []
     while True:
         try:
@@ -62,8 +65,9 @@ def create_ingredients():
             print("Κάτι πήγε στραβά.")
     for i in range(0, number_of_ingredients):
         name_of_ingredient = input(f"Καταχωρίστε το όνομα του {i + 1}ου υλικού (π.χ. σπαγγέτι): ")
+        add_product_if_not_exists(products, name_of_ingredient, "products.json")
         try:
-            quantity = input(f"Καταχωρίστε την ποσότητα του {i + 1}ου υλικού σε γραμμάρια (π.χ. 500): ")
+            quantity = int(input(f"Καταχωρίστε την ποσότητα του {i + 1}ου υλικού σε γραμμάρια (π.χ. 500): "))
         except:
             print("Κάτι πήγε στραβά.")
         ingredient = {
@@ -123,7 +127,8 @@ def create_recipe():
         "total_time": total_time,
         "ingredients": ingredients,
         "steps": steps,
-        "portions": portions
+        "portions": portions,
+        "cost": None
     }
     data_recipes = load_recipes("recipes.json")
     data_recipes["recipes"].append(recipe)
@@ -133,43 +138,70 @@ def create_recipe():
 
 # Προβολή όλων των συνταγών
 def view_recipes():
-    data_recipes = load_recipes("recipes.json")
-    for i, recipe in enumerate(data_recipes["recipes"]):
-        print(f"{i + 1}. {recipe['name']} (χρόνος εκτέλεσης: {recipe['total_time']} λεπτά.)")
+    recipes = load_recipes("recipes.json")
+    for i, recipe in enumerate(recipes["recipes"], start = 1):
+        print(f"{i}. {recipe['name']} ({recipe['total_time']})")
 
 # Αναζήτηση συνταγής
 def search_recipe():
-    data_recipes = load_recipes("recipes.json")
-    name = input("Αναζητήστε συνταγή με όνομα: ").lower()
-    found = [r for r in data_recipes["recipes"] if name in r["name"].lower()]
+    print("\nΑναζήτηση συνταγής:")
+    print("1. Με βάση το όνομα")
+    print("2. Με βάση το μέγιστο χρόνο παρασκευής")
+    print("3. Με βάση υλικό")
+    choice = input("Επιλογή: ")
+    recipes = load_recipes("recipes.json")
+    found = []
+    if choice == "1":
+        keyword = input("Δώσε λέξη-κλειδί για όνομα: ").lower()
+        found = [r for r in recipes["recipes"] if keyword in r["name"].lower()]
+    elif choice == "2":
+        while True:
+            try:
+                max_time = int(input("Δώσε μέγιστο χρόνο (σε λεπτά): "))
+                found = [r for r in recipes["recipes"] if r["total_time"] <= max_time]
+                break
+            except ValueError:
+                print("Μη έγκυρη είσοδος.")
+    elif choice == "3":
+        keyword = input("Δώσε υλικό: ").lower()
+        found = [r for r in recipes["recipes"] if any(keyword in ing["name"].lower() for ing in r["ingredients"])]
+    else:
+        print("Άκυρη επιλογή.")
+        return
     if found:
         for recipe in found:
-            print(f"\n{recipe['name']} (χρόνος εκτέλεσης: {recipe['total_time']} λεπτά.)")
+            print(f"\n{recipe['name']}")
+            print(f"Κατηγορία: {recipe['category']}")
+            print(f"Βαθμός δυσκολίας: {recipe['difficulty']}")
+            print(f"Συνολικός χρόνος εκτέλεσης: {recipe['total_time']}'")
             print("\nΥλικά:")
-            for i, ingredient in enumerate(recipe["ingredients"]):
-                if ingredient["quantity"] == None:
-                    print(f"xpsservices.dll {ingredient['name']}")
+            for ing in recipe["ingredients"]:
+                if ing["quantity"] == None:
+                    print(f" - {ing['name']}")
                 else:
-                    print(f"{i + 1}. {ingredient['name']} ({ingredient['quantity']} γρ.)")
+                    print(f" - {ing['name']} ({ing['quantity']} γρ.)")
             print("\nΒήματα:")
-            for i, step in enumerate(recipe["steps"]):
-                
-                print(f"{i + 1}. {step}")
+            for i, step in enumerate(recipe["steps"], 1):
+                print(f"{i}. {step}")
     else:
-        print(" Δεν βρέθηκε συνταγή.")
+        print("Δεν βρέθηκαν συνταγές.")
 
 def search_menu():
     while True:
-        print("1. Εμφάνιση συνταγών")
-        print("2. Αναζήτηση συνταγής")
+        print("\n   Διαχείριση Συνταγών")
+        print("1. Δες όλες τις συνταγές")
+        print("2. Αναζήτηση συνταγής (τίτλος, χρόνος ή υλικό)")
         print("3. Έξοδος")
-        choice = input("Επιλογή (1-3): ")
+
+        choice = input("Επιλογή: ")
         if choice == "1":
             view_recipes()
         elif choice == "2":
             search_recipe()
         elif choice == "3":
             break
+        else:
+            print("  Άκυρη επιλογή.")
 
 # Kostis
 
@@ -551,47 +583,38 @@ def delete_recipe():
 
 # Alex
 
-# Συνάρτηση για εμφάνιση υλικών
-def display_ingredients(ingredients):
-    print("\nΥλικά:")
-    for item in ingredients:
-        qty = item["quantity"]
-        name = item["name"]
-        if qty is not None:
-            print(f"- {name} ({qty} γρ.)")
-        else:
-            print(f"- {name}")
+def execute_recipe():
+    data = load_recipes("recipes.json")
+    recipes = data["recipes"]
 
-# Συνάρτηση για εμφάνιση βημάτων
-def display_steps(steps):
-    print("\nΒήματα εκτέλεσης:")
-    for i, step in enumerate(steps, 1):
-        print(f"{i}. {step}")
+    print("\n📋 Διαθέσιμες συνταγές:")
+    for i, recipe in enumerate(recipes, 1):
+        print(f"{i}. {recipe['name']}")
 
-# Συνάρτηση για εμφάνιση όλων των διαθέσιμων συνταγών
-def list_recipes():
-    data_recipes = load_recipes("recipes.json")
-    print("\nΔιαθέσιμες συνταγές:")
-    for i, recipe in enumerate(data_recipes["recipes"]):
-        print(f"{i + 1}. {recipe['name']}")
+    choice = input("\nΔιάλεξε αριθμό συνταγής ή 'q' για έξοδο: ")
+    if choice.lower() == 'q':
+        return
 
-# Συνάρτηση κύριας ροής του προγράμματος
-def make_menu():
-    data_recipes = load_recipes("recipes.json")
-    while True:
-        list_recipes()
-        choice = input("\nΔιάλεξε αριθμό συνταγής ή 'q' για έξοδο: ")
-        if choice.lower() == 'q':
-            print("Έξοδος από το πρόγραμμα. Καλή όρεξη!")
-            break
-        if not choice.isdigit() or int(choice) < 1 or int(choice) > len(data_recipes["recipes"]):
-            print("Μη έγκυρη επιλογή. Προσπάθησε ξανά.")
-            continue
-        recipe = data_recipes["recipes"][int(choice) - 1]
-        print(f"\nΣυνταγή: {recipe['name']}")
-        display_ingredients(recipe['ingredients'])
-        display_steps(recipe['steps'])
-        input("\nΠάτησε Enter για να επιστρέψεις στο μενού...")
+    if not choice.isdigit() or not (1 <= int(choice) <= len(recipes)):
+        print("Μη έγκυρη επιλογή.")
+        return
+
+    recipe = recipes[int(choice) - 1]
+    print(f"\n🍽️ {recipe['name']}")
+    print(f"Κατηγορία: {recipe['category']}")
+    print(f"Δυσκολία: {recipe['difficulty']}")
+    print(f"Χρόνος: {recipe['total_time']} λεπτά")
+
+    print("\n🧾 Υλικά:")
+    for ing in recipe["ingredients"]:
+        qty = f" ({ing['quantity']} γρ)" if ing["quantity"] else ""
+        print(f"- {ing['name']}{qty}")
+
+    print("\n🧑‍🍳 Εκτέλεση:")
+    for i, step in enumerate(recipe["steps"], 1):
+        input(f"\nΒήμα {i}: {step}\nΠάτησε Enter για να συνεχίσεις...")
+        for _ in tqdm(range(30), desc="Επεξεργασία...", ncols=60):
+            time.sleep(0.01)
 
 # Giorgos
 
@@ -676,7 +699,7 @@ def calculate_cost():
 
 def main():
     while True:
-        print("=== Συνταγές Μαγειρικής ===")
+        print("--- Συνταγές Μαγειρικής ---")
         print("1. Καταχώρηση συνταγής")
         print("2. Αναζήτηση συνταγής")
         print("3. Τροποποίηση συνταγής")
@@ -685,7 +708,7 @@ def main():
         print("6. Υπολογισμός κόστους συνταγής")
         print("7. Έξοδος")
         try:
-            choice = int(input("Επιλέξτε μια ενέργεια (1-7): "))
+            choice = int(input("Επιλέξτε μια επιλογή (1-7): "))
         except ValueError:
             print("Μη έγκυρη επιλογή. Παρακαλώ εισάγετε έναν αριθμό.\n")
             continue
@@ -698,7 +721,7 @@ def main():
         elif choice == 4:
             delete_recipe()
         elif choice == 5:
-            make_menu()
+            execute_recipe()
         elif choice == 6:
             calculate_cost()
         elif choice == 7:
