@@ -3,9 +3,10 @@ data = load_products("products.json")
 while True:
     print("--- Διαχείριση προϊόντων ---")
     print("1. Καταχώριση προϊόντος")
-    print("2. Τροποποίηση προϊόντος")
-    print("3. Διαγραφή προϊόντος")
-    print("4. Έξοδος")
+    print("2. Εμφάνιση προϊόντων")
+    print("3. Τροποποίηση προϊόντος")
+    print("4. Διαγραφή προϊόντος")
+    print("5. Έξοδος")
     try:
         choice = int(input("Επιλέξτε μια επιλογή (1-4): "))
     except:
@@ -23,6 +24,11 @@ while True:
         save_products(data, "products.json")
         print("Το προϊόν καταχωρήθηκε με επιτυχία!\n")
     elif choice == 2:
+        print("Προϊόντα:")
+        for i, product in enumerate(data["products"], start = 1):
+            print(f"{i}. {product['name']} - {product['price_per_kg']} €/κιλό")
+        print()
+    elif choice == 3:
         while True:
             print("1. Τροποποίηση ονόματος")
             print("2. Τροποποίηση τιμής")
@@ -76,7 +82,7 @@ while True:
                 break
             else:
                 print("Μη έγκυρη επιλογή. Παρακαλώ επιλέξτε ξανά.")
-    elif choice == 3:
+    elif choice == 4:
         for i, product in enumerate(data["products"], start = 1):
             print(f"{i}. {product['name']}")
         while True:
@@ -92,7 +98,7 @@ while True:
         data["products"].pop(choice - 1)
         save_products(data, "products.json")
         print("Το προϊόν διαγράφηκε με επιτυχία!\n")
-    elif choice == 4:
+    elif choice == 5:
         print("Έξοδος από τη διαχείριση προϊόντων.")
         break
     else:
