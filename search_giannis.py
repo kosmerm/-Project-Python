@@ -1,8 +1,7 @@
 import json
 
+data = load_recipes("recipes.json")
 
-with open("recipes.json", "r", encoding="utf-8") as f:
-    recipes = json.load(f)
 
 
 
