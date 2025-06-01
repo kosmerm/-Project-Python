@@ -571,67 +571,71 @@ def edit_total_time(recipe):
 
 #Συνάρτηση τροποποίησης υλικών ==================================================================================
 def edit_ingredients(recipe):
-
-    #Έλεγχος εάν η λίστα με τα ingredients είναι κενή
     if not recipe["ingredients"]:
         print("Δεν υπάρχουν υλικά για αυτήν την συνταγή.")
         print("Παρακαλώ εκχωρήστε τα από την αρχή")
         create_ingredients()
-    
-   #1o menu για τροποποίηση ή προσθήκη υλικών
+
     while True:
         print("\nΕπιλογές:")
         print("1. Τροποποίηση υπάρχοντων υλικών")
         print("2. Προσθήκη νέου υλικού")
         print("0. Έξοδος")
-        epilogh = int(input("Εισάγετε την επιλογή σας: "))
 
-        if(epilogh==1):
+        try:
+            epilogh = int(input("Εισάγετε την επιλογή σας: "))
+        except ValueError:
+            print("Λάθος καταχώρηση , παρακαλώ εισάγετε ακέραιο αριθμό")
+            continue
+
+        if epilogh == 1:
+            if not recipe["ingredients"]:
+                print("Η λίστα των υλικών είναι κενή.")
+                create_ingredients()
+                continue
+
             while True:
                 print("Υλικά συνταγής:")
-
                 for i, ingredient in enumerate(recipe["ingredients"], start=1):
                     print(f"{i}. {ingredient['name']} ({ingredient['quantity']})")
-                
-                if recipe["ingredients"]:
-                    try:
-                        ingredient_number = int(input("Δώστε τον αριθμό του υλικού που θέλετε να τροποποιήσετε: "))
-                        if ingredient_number < 1 or ingredient_number > len(recipe["ingredients"]):
-                            print("Λάθος αριθμός, εισάγετε έναν αριθμό από τα διαθέσιμα υλικά")
-                        else:
-                            break
-                    except ValueError:
-                        print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
-                else:
-                    print("Η λίστα των υλικών είναι κενή.")
-                create_ingredients()
 
-            #εισαγωγή του υλικού που επιλέξαμε για τροποποίηση σε μία μεταβλητή
-            ingredient=recipe["ingredients"][ingredient_number-1]
+                try:
+                    ingredient_number = int(input("Δώστε τον αριθμό του υλικού που θέλετε να τροποποιήσετε: "))
+                    if ingredient_number < 1 or ingredient_number > len(recipe["ingredients"]):
+                        print("Λάθος αριθμός, εισάγετε έναν αριθμό από τα διαθέσιμα υλικά")
+                        continue
+                    break  # Επιτυχής επιλογή
+                except ValueError:
+                    print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό!")
 
-            data_products=load_products("products.json")
-            #2ο menu στην τροποποίηση για αλλαγή ονόματος ή ποσότητας
+            ingredient = recipe["ingredients"][ingredient_number - 1]
+            data_products = load_products("products.json")
+
             while True:
-                print(f"Τροποποίηση {ingredient["name"]}:")
+                print(f"\nΤροποποίηση {ingredient['name']}:")
                 print("1. Τροποποίηση Ονόματος")
                 print("2. Τροποποίηση Ποσότητας")
                 print("0. Έξοδος")
 
-                option = int(input("Επιλέξτε 1 έως 2 για να συνεχίσετε ή 0 για έξοδο: "))
+                try:
+                    option = int(input("Επιλέξτε 1 έως 2 για να συνεχίσετε ή 0 για έξοδο: "))
+                except ValueError:
+                    print("Παρακαλώ εισάγετε έναν έγκυρο ακέραιο αριθμό!")
+                    continue
 
-                if option == 1:          
+                if option == 1:
                     new_ingredient_name = input("Καταχωρήστε το όνομα του υλικού: ").strip()
                     if new_ingredient_name:
                         ingredient["name"] = new_ingredient_name
                         print("Το όνομα ενημερώθηκε!")
-                        add_product_if_not_exists(data_products,new_ingredient_name,"products.json")
+                        add_product_if_not_exists(data_products, new_ingredient_name, "products.json")
                     else:
                         print("Το όνομα δεν μπορεί να είναι κενό!")
                 elif option == 2:
                     while True:
                         try:
                             new_ingredient_quantity = int(input("Καταχωρήστε την ποσότητα του υλικού: "))
-                            if new_ingredient_quantity >=0:
+                            if new_ingredient_quantity >= 0:
                                 ingredient["quantity"] = new_ingredient_quantity
                                 print("Η ποσότητα ενημερώθηκε!")
                                 break
@@ -640,15 +644,17 @@ def edit_ingredients(recipe):
                         except ValueError:
                             print("Παρακαλώ εισάγετε έναν ακέραιο αριθμό για την ποσότητα!")
                 elif option == 0:
-                    return
+                    break
                 else:
                     print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
-        elif(epilogh==2):
-            #καλεί την συνάρτηση εισαγωγής υλικών στην συνταγή
+
+        elif epilogh == 2:
             create_ingredients()
+
         elif epilogh == 0:
-            print("Έξοδος από την τροποποίηση των βημάτων.")
+            print("Έξοδος από την τροποποίηση των υλικών.")
             return
+
         else:
             print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
 
