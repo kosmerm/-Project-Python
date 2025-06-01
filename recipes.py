@@ -762,7 +762,7 @@ def delete_recipe():
                 print("Λάθος αριθμός, εισάγετε έναν αριθμό από τις διαθέσιμες συνταγές")
             else:
                 selected_recipe = data_recipes["recipes"][recipe_number - 1]
-                confirmation=input(f"Είστε σίγουρoι ότι θέλετε να διαγράψετε τη συνταγή {selected_recipe['name']};(y/n): ")
+                confirmation=input(f"Είστε σίγουρoς/η ότι θέλετε να διαγράψετε τη συνταγή {selected_recipe['name']};(y/n): ")
                 if confirmation=='n':
                     print("Η διαγραφή ακυρώθηκε.")
                     return
