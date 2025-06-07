@@ -873,6 +873,7 @@ def calculate_recipe_cost():
     cost = round(total_cost, 2)
     data_recipes['recipes'][choice - 1]["cost"] = cost # Ενημερώνει το λεξικό της συνταγής
     save_recipes(data_recipes, "recipes.json")
+    print(f"Το συνολικό κόστος της συνταγής {data_recipes['recipes'][choice - 1]["name"]} είναι {data_recipes['recipes'][choice - 1]["cost"]}")
 
 #Απλό menu για χρήση
 def calculate_cost_menu():
