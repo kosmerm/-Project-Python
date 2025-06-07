@@ -437,7 +437,6 @@ def edit_recipes():
         #Επιλογές τροποποίησης
         if option == 1:
             edit_name(recipe)
-        #Τα υλικά δεν πρέπει να αποθηκευτούν σαν string σε λίστα αλλά σαν λεξικό ΔΕΣ ΤΟ ΑΥΤΟ!!!!!!!!!!!!
         elif option == 2:
             edit_category(recipe)
         elif option == 3:
