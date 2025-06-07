@@ -1,10 +1,32 @@
+import os
+import sys
 import json
+from shutil import copyfile
 
-# === Συνταγές ===
+def resource_path(filename):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, filename)
+
+def writable_path(filename):
+    base_path = os.path.dirname(sys.executable if getattr(sys, 'frozen', False) else __file__)
+    return os.path.join(base_path, filename)
+
+def ensure_local_copy(filename):
+    dst = writable_path(filename)
+    if not os.path.exists(dst):
+        src = resource_path(filename)
+        copyfile(src, dst)
+    return dst
+
+recipes_path = ensure_local_copy("recipes.json")
+products_path = ensure_local_copy("products.json")
 
 def load_recipes(file_name):
     try:
-        with open(file_name, "r", encoding="utf-8") as f:
+        with open(recipes_path, "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
         return []
@@ -14,7 +36,7 @@ def load_recipes(file_name):
 
 def save_recipes(recipes, file_name):
     try:
-        with open(file_name, "w", encoding="utf-8") as f:
+        with open(recipes_path, "w", encoding="utf-8") as f:
             json.dump(recipes, f, indent=2, ensure_ascii=False)
         print("Επιτυχής αποθήκευση!\n")
     except Exception as e:
@@ -24,7 +46,7 @@ def save_recipes(recipes, file_name):
 
 def load_products(file_name):
     try:
-        with open(file_name, "r", encoding="utf-8") as f:
+        with open(products_path, "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
         return []
@@ -34,7 +56,7 @@ def load_products(file_name):
 
 def save_products(products, file_name):
     try:
-        with open(file_name, "w", encoding="utf-8") as f:
+        with open(products_path, "w", encoding="utf-8") as f:
             json.dump(products, f, indent=2, ensure_ascii=False)
     except Exception as e:
         print(f"Σφάλμα αποθήκευσης προϊόντων: {e}")
