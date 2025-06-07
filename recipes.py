@@ -422,7 +422,7 @@ def edit_recipes():
     #εισαγωγή της συνταγής που επιλέξαμε σε μεταβλητή που θα μπει παράμετρος στις υπόλοιπες συναρτήσεις τροποποίησης
     recipe = data_recipes["recipes"][recipe_number - 1]
 
-    #Επανάληψη για το menu
+    #Επανάληψη για το menu τροποποίησης
     while True:
         print("1. Τροποποίηση Ονόματος")
         print("2. Τροποποίηση Κατηγορίας")
@@ -453,14 +453,14 @@ def edit_recipes():
             print()
             break  # Τερματίζει το loop 
         else:
-            print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά") # το return σταματά την εκτέλεση της current funtion και προχωρά τον κώδικα
+            print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά") 
 
         save_recipes(data_recipes, "recipes.json")
   
         
 #Συνάρτηση τροποποίησης ονόματος =====================================================================
 def edit_name(recipe):
-    #Έλεγχος μήπως έχει μείνει κενή η μεταβλητή
+    #Έλεγχος μήπως είναι κενή η μεταβλητή
     if recipe["name"]:
         print(f"Το όνομα της συνταγής είναι {recipe["name"]}")
         #Επανάληψη ώστε να δίνει την δυνατότηα στον χρήστη να επιλέξει ξανά και για ασφάλεια
@@ -523,19 +523,23 @@ def edit_difficulty(recipe):
             option=input("Είστε σίγουροι ότι θέλετε να αλλάξετε τον βαθμό της δυσκολίας? πατήστε 'y' αλλιώς 'n' για έξοδο:")
             if option=="y":
                 difficulties = ["εύκολη", "μεσαία", "δύσκολη"]
-            for i, difficulty in enumerate(difficulties):
-                print(f"{i + 1}. {difficulty}")
-            while True:
-                try:
-                    difficulty = int(input("Καταχωρίστε τον βαθμό δυσκολίας (1-3): "))
-                    if difficulty < 1 or difficulty > 3:
-                        continue
-                    else:
-                        recipe["difficulty"] = difficulties[difficulty-1]
-                        print("Η δυσκολία ενημερώθηκε!")
-                        return 
-                except:
-                    print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
+                for i, difficulty in enumerate(difficulties):
+                    print(f"{i + 1}. {difficulty}")
+                while True:
+                    try:
+                        difficulty = int(input("Καταχωρίστε τον βαθμό δυσκολίας (1-3): "))
+                        if difficulty < 1 or difficulty > 3:
+                            continue
+                        else:
+                            recipe["difficulty"] = difficulties[difficulty-1]
+                            print("Η δυσκολία ενημερώθηκε!")
+                            return 
+                    except:
+                        print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
+            elif option=="n":
+                return
+            else:
+                print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
     else:
         print("Δεν βρέθηκε η δυσκολία της συνταγής.Παρακαλώ εκχωρήστε την από την αρχή")  
         create_difficulty()  
