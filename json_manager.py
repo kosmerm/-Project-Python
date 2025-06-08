@@ -61,14 +61,18 @@ def save_products(products, file_name):
     except Exception as e:
         print(f"Σφάλμα αποθήκευσης προϊόντων: {e}")
 
+#Συνάρτηση που καλείται από άλλες συναρτήσεις όταν προσθέτουμε ένα υλικό και αυτό ΔΕΝ υπάρχει στο products.json
 def add_product_if_not_exists(products, name, file_name):
     for product in products["products"]:
         if product["name"].lower() == name.lower():
             return
-    try:
-        price = float(input(f"Το προϊόν '{name}' δεν υπάρχει.\nΚαταχωρήστε τιμή ανά κιλό (€): "))
-        products["products"].append({"name": name, "price_per_kg": price})
-        save_products(products, file_name)
-        print(f"Το προϊόν '{name}' προστέθηκε στο products.json.")
-    except ValueError:
-        print("Μη έγκυρη τιμή. Το προϊόν δεν προστέθηκε.")
+    while True:
+        try:
+            price = float(input(f"Το προϊόν '{name}' δεν υπάρχει.\nΚαταχωρήστε τιμή ανά κιλό (€): "))
+
+            products["products"].append({"name": name, "price_per_kg": price})
+            save_products(products, file_name)
+            print(f"Το προϊόν '{name}' προστέθηκε στο products.json.")
+            return
+        except ValueError:
+            print("Μη έγκυρη τιμή. Παρακαλώ εισάγετε έναν αριθμό.")
