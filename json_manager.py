@@ -3,6 +3,7 @@ import sys
 import json
 from shutil import copyfile
 
+#======================  Συναρτήσεις για το exe ==================================
 def resource_path(filename):
     try:
         base_path = sys._MEIPASS
