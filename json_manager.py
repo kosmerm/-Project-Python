@@ -24,6 +24,7 @@ def ensure_local_copy(filename):
 recipes_path = ensure_local_copy("recipes.json")
 products_path = ensure_local_copy("products.json")
 
+#=========================  Load και save Συνταγές  ===================================
 def load_recipes(file_name):
     try:
         with open(recipes_path, "r", encoding="utf-8") as f:
@@ -42,7 +43,7 @@ def save_recipes(recipes, file_name):
     except Exception as e:
         print(f"Σφάλμα κατά την αποθήκευση: {e}")
 
-# === Προϊόντα ===
+#=========================  Load και save Προϊόντα  ===================================
 
 def load_products(file_name):
     try:
