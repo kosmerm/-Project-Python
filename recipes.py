@@ -652,7 +652,26 @@ def edit_ingredients(recipe):
                     print("Μη έγκυρη επιλογή. Προσπαθήστε ξανά")
 
         elif epilogh == 2:
-            create_ingredients()
+            products = load_products("products.json")
+            while True:
+                try:
+                    number_of_ingredients = int(input("Καταχωρίστε το πλήθος των υλικών: "))
+                
+                    for i in range(0, number_of_ingredients):
+                        name_of_ingredient = input(f"Καταχωρίστε το όνομα του {i + 1}ου υλικού (π.χ. σπαγγέτι): ")
+                        add_product_if_not_exists(products, name_of_ingredient, "products.json")
+                        try:
+                            quantity = int(input(f"Καταχωρίστε την ποσότητα του {i + 1}ου υλικού σε γραμμάρια (π.χ. 500): "))
+                        except:
+                            print("Παρακαλώ εισάγετε ακέραιο αριθμό.")
+                        ingredient = {
+                            "name": name_of_ingredient,
+                            "quantity": quantity
+                        }
+                        recipe["ingredients"].append(ingredient)
+                    break
+                except ValueError:
+                    print("Παρακαλώ εισάγετε ακέραιο αριθμό.")
 
         elif epilogh == 0:
             print("Έξοδος από την τροποποίηση των υλικών.")
