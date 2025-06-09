@@ -5,12 +5,12 @@ import os, time, platform
 
 # Το όνομα της συνταγής
 def create_name():
-    name = input("Καταχωρίστε το όνομα της συνταγής (π.χ. μακαρόνια με κιμά): ")
+    name = input("Καταχωρίστε το όνομα της συνταγής: ")
     return name
 
 # Η κατηγορία της συνταγής
 def create_category():
-    categories = ["δημητριακά", "φρούτα", "λαχανικά", "γαλακτοκομικά", "κρέας & προϊόντα", "όσπρια", "λίπη & έλαια", "τρόφιμα με πολύ λίπος ή ζάχαρη"]
+    categories = ["Δημητριακά", "Φρούτα", "Λαχανικά", "Γαλακτοκομικά", "Κρέας & προϊόντα", "Όσπρια", "Λίπη & έλαια", "Τρόφιμα με πολύ λίπος ή ζάχαρη"]
     for i, category in enumerate(categories):
         print(f"{i + 1}. {category}")
     while True:
@@ -21,11 +21,11 @@ def create_category():
             else:
                 return categories[choice - 1]
         except:
-            print("Κάτι πήγε στραβά.")
+            print("Η κατηγορία πρέπει να περιέχει μόνο αριθμούς. Δοκιμάστε ξανά.")
 
 # Ο βαθμός δυσκολίας της συνταγής
 def create_difficulty():
-    difficulties = ["εύκολη", "μεσαία", "δύσκολη"]
+    difficulties = ["Εύκολη", "Μεσαία", "Δύσκολη"]
     for i, difficulty in enumerate(difficulties):
         print(f"{i + 1}. {difficulty}")
     while True:
@@ -36,12 +36,12 @@ def create_difficulty():
             else:
                 return difficulties[choice - 1]
         except:
-            print("Κάτι πήγε στραβά.")
+            print("Ο βαθμός δυσκολίας πρέπει να περιέχει μόνο αριθμούς. Δοκιμάστε ξανά.")
 
 # Ο συνολικός χρόνος εκτέλεσης της συνταγής
 def create_total_time():
     while True:
-        total_time = input("Καταχωρίστε τον συνολικό χρόνο εκτέλεσης σε λεπτά (π.χ. 65): ")
+        total_time = input("Καταχωρίστε τον συνολικό χρόνο εκτέλεσης σε λεπτά: ")
         if total_time == "":
             total_time = None
             return total_time
@@ -50,7 +50,7 @@ def create_total_time():
                 total_time = int(total_time)
                 return total_time
             except:
-                print("Κάτι πήγε στραβά.")
+                print("Ο συνολικός χρόνος εκτέλεσης πρέπει να περιέχει μόνο αριθμούς ή κενό. Δοκιμάστε ξανά.")
 
 # Τα υλικά της συνταγής
 def create_ingredients():
@@ -61,14 +61,19 @@ def create_ingredients():
             number_of_ingredients = int(input("Καταχωρίστε το πλήθος των υλικών: "))
             break
         except:
-            print("Κάτι πήγε στραβά.")
+            print("Το πλήθος των υλικών πρέπει να περιέχει μόνο αριθμούς. Δοκιμάστε ξανά.")
     for i in range(0, number_of_ingredients):
-        name_of_ingredient = input(f"Καταχωρίστε το όνομα του {i + 1}ου υλικού (π.χ. σπαγγέτι): ")
+        while True:
+            name_of_ingredient = input(f"Καταχωρίστε το όνομα του {i + 1}ου υλικού: ")
+            if name_of_ingredient != "":
+                break
         add_product_if_not_exists(products, name_of_ingredient, "products.json")
-        try:
-            quantity = int(input(f"Καταχωρίστε την ποσότητα του {i + 1}ου υλικού σε γραμμάρια (π.χ. 500): "))
-        except:
-            print("Κάτι πήγε στραβά.")
+        while True:
+            try:
+                quantity = int(input(f"Καταχωρίστε την ποσότητα του {i + 1}ου υλικού σε γραμμάρια: "))
+                break
+            except:
+                print("Η ποσότητα πρέπει να περιέχει μόνο αριθμούς. Δοκιμάστε ξανά.")
         ingredient = {
             "name": name_of_ingredient,
             "quantity": quantity
@@ -84,7 +89,7 @@ def create_steps():
             number_of_steps = int(input("Καταχωρίστε το πλήθος των βημάτων: "))
             break
         except:
-            print("Κάτι πήγε στραβά.")
+            print("Το πλήθος των βημάτων πρέπει να περιέχει μόνο αριθμούς. Δοκιμάστε ξανά.")
     for i in range(0, number_of_steps):
         while True:
             description = input(f"Καταχωρίστε την περιγραφή του {i + 1}ου βήματος: ")
@@ -97,10 +102,10 @@ def create_steps():
 def create_portions():
     while True:
         try:
-            portions = int(input("Καταχωρίστε τις μερίδες της συνταγής (π.χ. 6): "))
+            portions = int(input("Καταχωρίστε τις μερίδες της συνταγής: "))
             break
         except:
-            print("Κάτι πήγε στραβά.")
+            print("Οι μερίδες πρέπει να είναι ένας αριθμός. Δοκιμάστε ξανά.")
     return portions
 
 # 1. Καταχώρηση συνταγής
