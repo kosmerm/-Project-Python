@@ -1,15 +1,10 @@
-import json
-
-data = load_recipes("recipes.json")
-
-
-
-
 def unique_categories(recipes):
-    return sorted(set(r['category'] for r in recipes))
+    data = load_recipes("recipes.json")
+    return sorted(set(r['category'] for r in data["recipes"]))
 
 def unique_difficulties(recipes):
-    return sorted(set(r['difficulty'] for r in recipes))
+    data = load_recipes("recipes.json")
+    return sorted(set(r['difficulty'] for r in data["recipes"]))
 
 def filter_recipes_by_category(recipes, category):
     return [r for r in recipes if r['category'] == category]
@@ -41,29 +36,31 @@ def show_steps(steps):
     for i, step in enumerate(steps, 1):
         print(f"{i}. {step}")
 
-def main():
+def search_menu():
+    data = load_recipes("recipes.json")
     while True:
-        print("\nΦίλτρα επιλογής:")
+        print("\n--- Αναζήτηση συνταγής ---")
+        print("Φίλτρα επιλογής:")
         print("1. Όλες οι συνταγές")
         print("2. Φιλτράρισμα ανά κατηγορία")
         print("3. Φιλτράρισμα ανά δυσκολία")
         print("4. Φιλτράρισμα ανά χρόνο προετοιμασίας")
         print("5. Φιλτράρισμα ανά υλικά")
-        print("q. Έξοδος")
+        print("6. Έξοδος")
 
         choice = input("Επίλεξε επιλογή: ").strip().lower()
 
-        if choice == 'q':
-            print("Έξοδος από το πρόγραμμα. Καλή όρεξη!")
+        if choice == '6':
+            print("Έξοδος από την αναζήτηση συνταγής.\n")
             break
 
-        filtered_recipes = recipes
+        filtered_recipes = data["recipes"]
 
         if choice == '1':
-            pass  # όλες οι συνταγές
+            pass
 
         elif choice == '2':
-            categories = unique_categories(recipes)
+            categories = unique_categories(data)
             print("\nΔιαθέσιμες κατηγορίες:")
             for i, cat in enumerate(categories, 1):
                 print(f"{i}. {cat}")
@@ -74,10 +71,10 @@ def main():
                 print("Μη έγκυρη επιλογή κατηγορίας.")
                 continue
             selected_category = categories[int(cat_choice) - 1]
-            filtered_recipes = filter_recipes_by_category(recipes, selected_category)
+            filtered_recipes = filter_recipes_by_category(data["recipes"], selected_category)
 
         elif choice == '3':
-            difficulties = unique_difficulties(recipes)
+            difficulties = unique_difficulties(data["recipes"])
             print("\nΔιαθέσιμες δυσκολίες:")
             for i, diff in enumerate(difficulties, 1):
                 print(f"{i}. {diff}")
@@ -88,7 +85,7 @@ def main():
                 print("Μη έγκυρη επιλογή δυσκολίας.")
                 continue
             selected_difficulty = difficulties[int(diff_choice) - 1]
-            filtered_recipes = filter_recipes_by_difficulty(recipes, selected_difficulty)
+            filtered_recipes = filter_recipes_by_difficulty(data["recipes"], selected_difficulty)
 
         elif choice == '4':
             print("\nΦίλτρα χρόνου (λεπτά):")
@@ -100,13 +97,13 @@ def main():
             if time_choice == 'q':
                 continue
             if time_choice == '1':
-                filtered_recipes = filter_recipes_by_time(recipes, 15)
+                filtered_recipes = filter_recipes_by_time(data["recipes"], 15)
             elif time_choice == '2':
-                filtered_recipes = filter_recipes_by_time(recipes, 30)
+                filtered_recipes = filter_recipes_by_time(data["recipes"], 30)
             elif time_choice == '3':
-                filtered_recipes = filter_recipes_by_time(recipes, 60)
+                filtered_recipes = filter_recipes_by_time(data["recipes"], 60)
             elif time_choice == '4':
-                filtered_recipes = [r for r in recipes if r["total_time"] > 60]
+                filtered_recipes = [r for r in data["recipes"] if r["total_time"] > 60]
             else:
                 print("Μη έγκυρη επιλογή χρόνου.")
                 continue
@@ -117,7 +114,7 @@ def main():
             if not ingredients_list:
                 print("Δεν δόθηκαν υλικά για φιλτράρισμα.")
                 continue
-            filtered_recipes = filter_recipes_by_ingredients(recipes, ingredients_list)
+            filtered_recipes = filter_recipes_by_ingredients(data["recipes"], ingredients_list)
 
         else:
             print("Μη έγκυρη επιλογή. Προσπάθησε ξανά.")
@@ -128,9 +125,8 @@ def main():
             continue
 
         print("\nΔιαθέσιμες συνταγές:")
-        for i, recipe in enumerate(filtered_recipes, 1):
-            print(f"{i}. {recipe['name']} (Χρόνος: {recipe['total_time']} λεπτά)")
-
+        for i, recipe in enumerate(filtered_recipes, start = 1):
+            print(f"{i}. {recipe['name']} (Συνολικός χρόνος εκτέλεσης: {recipe['total_time']}')")
         rec_choice = input("Επίλεξε τον αριθμό της συνταγής ή 'q' για επιστροφή: ")
         if rec_choice == 'q':
             continue
@@ -145,8 +141,5 @@ def main():
 
         proceed = input("\nΘες να δεις άλλη συνταγή; (ναι/όχι): ")
         if proceed.strip().lower() not in ['ναι', 'ν', 'yes', 'y']:
-            print("Έξοδος από το πρόγραμμα. Καλή όρεξη!")
+            print("Έξοδος από την αναζήτηση συνταγής.\n")
             break
-
-if __name__ == "__main__":
-    main()
