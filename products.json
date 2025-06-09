@@ -6,19 +6,23 @@
     },
     {
       "name": "μοσχαρίσιος κιμάς",
-      "price_per_kg": 10.30
+      "price_per_kg": 12.20
     },
     {
       "name": "βούτυρο",
-      "price_per_kg": 12.40
+      "price_per_kg": 11.40
     },
     {
       "name": "κρεμμύδι",
-      "price_per_kg": 0.78
+      "price_per_kg": 0.95
+    },
+    {
+      "name": "κρεμμύδια",
+      "price_per_kg": 0.95
     },
     {
       "name": "κρυσταλλική ζάχαρη",
-      "price_per_kg": 0.70
+      "price_per_kg": 0.67
     },
     {
       "name": "πελτές ντομάτας",
@@ -26,11 +30,11 @@
     },
     {
       "name": "ντομάτα κονκασέ",
-      "price_per_kg": 1.62
+      "price_per_kg": 1.40
     },
     {
       "name": "ελαιόλαδο",
-      "price_per_kg": 6.58
+      "price_per_kg": 5.46
     },
     {
       "name": "αλάτι",
@@ -41,8 +45,8 @@
       "price_per_kg": 12.00
     },
     {
-      "name": "ντομάτα",
-      "price_per_kg": 1.75
+      "name": "ντομάτες",
+      "price_per_kg": 1.45
     },
     {
       "name": "ξίδι βαλσάμικο",
@@ -61,12 +65,12 @@
       "price_per_kg": 3.60
     },
     {
-      "name": "πράσινη πιπεριά",
-      "price_per_kg": 3.55
+      "name": "πράσινες πιπεριές",
+      "price_per_kg": 1.93
     },
     {
       "name": "ρύζι γλασέ",
-      "price_per_kg": 1.96
+      "price_per_kg": 1.56
     },
     {
       "name": "πατάτα baby",
@@ -74,19 +78,19 @@
     },
     {
       "name": "κολοκυθάκι",
-      "price_per_kg": 1.75
+      "price_per_kg": 1.25
     },
     {
       "name": "καρότο",
-      "price_per_kg": 0.80
+      "price_per_kg": 0.76
+    },
+    {
+      "name": "καρότα",
+      "price_per_kg": 0.76
     },
     {
       "name": "φακές",
       "price_per_kg": 1.88
-    },
-    {
-      "name": "κύμινο",
-      "price_per_kg": 18.80
     },
     {
       "name": "μπούκοβο",
@@ -94,7 +98,7 @@
     },
     {
       "name": "κύβος λαχανικών",
-      "price_per_kg": 7.33
+      "price_per_kg": 8.17
     }
   ]
 }
